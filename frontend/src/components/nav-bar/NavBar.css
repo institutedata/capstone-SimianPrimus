@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap');
+
+  .toolbar {
+    padding: 30px;
+    background: linear-gradient(180deg, #99d9f9, #d9e7f4 );
+  }
+  
+  .logo-link {
+    display: block;
+    height: 50px;  
+  }
+  
+  /* NavBar.css */
+.logo-image {
+  width: 120%; /* Default size on all screens */
+  height: auto; /* Maintain aspect ratio */
+}
+
+@media (min-width: 1200px) { 
+  .logo-image {
+    width: 80%;
+  }
+
+  .toolbar {
+    padding: 25px;
+  }
+}
+  
