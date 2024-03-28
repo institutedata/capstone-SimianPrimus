@@ -21,8 +21,8 @@
     Implement Forms and Data Fetching   :active,  f3, after f2, 3d
     Install MaterialUI                  :active,  f4, after f3, 3d
     Frontend Interactivity with Hooks   :active,  f5, after f4, 4d
-    Frontend Testing                    :         f6, after f5, 2d
-    Frontend Fine-tuning                :         f7, after f6, 3d
+    Frontend Testing                    :active,  f6, after f5, 2d
+    Frontend Fine-tuning                :active,  f7, after f6, 3d
 
     section Finalization
     Code Review and Refactoring         :         cr, after f7, 3d

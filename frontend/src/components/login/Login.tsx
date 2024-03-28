@@ -1,5 +1,5 @@
 // Import dependencies and other required types at the top of the file
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import axios, { AxiosResponse } from "axios";
 import { TextField, Button, Snackbar } from "@mui/material";
 import Alert from "@mui/material/Alert";
@@ -15,6 +15,7 @@ type AuthResponse = {
     lastName: string;
     email: string;
     username: string;
+    profileImage: string;
   };
 };
 
@@ -22,54 +23,105 @@ const AuthPage: React.FC = () => {
   const navigate = useNavigate();
   const [openAlert, setOpenAlert] = useState<boolean>(false);
   const [alertMessage, setAlertMessage] = useState<string>("");
-
   const [isLogin, setIsLogin] = useState<boolean>(true);
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
   const [username, setUsername] = useState<string>("");
+  const [profileImage, setProfileImage] = useState<File | null>(null);
+  const [profileImageUrl, setProfileImageUrl] = useState<string | null>(null);
 
+  const hiddenFileInput = React.useRef<HTMLInputElement>(null);
+
+  const handleFileButtonClick = () => {
+    hiddenFileInput.current?.click();
+  };
+
+  useEffect(() => {
+    // Check if the user is already logged in
+    const token = localStorage.getItem("token");
+    const savedProfileImageUrl = localStorage.getItem("profileImage");
+    if (token && savedProfileImageUrl) {
+      setProfileImageUrl(savedProfileImageUrl);
+    }
+  }, []);
+
+  // Function to handle file selection
+  const handleFileSelect: React.ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    if (event.target.files && event.target.files[0]) {
+      setProfileImage(event.target.files[0]);
+    }
+  };
+
+  // Function to handle login/signup
   const handleAuth = async () => {
     try {
       const endpoint = isLogin ? "login" : "signup";
-      const userData = {
-        email,
-        password,
-        ...(isLogin ? {} : { firstName, lastName, username }),
-      };
-      const response: AxiosResponse<AuthResponse> = await axios.post(
-        `http://localhost:8080/api/user/${endpoint}`,
-        userData
-      );
-
-      console.log("Response data:", response.data);
-
-      if (response.data.token) {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userId", response.data.user.userId.toString());
-        setAlertMessage(
-          isLogin ? "Logged in successfully." : "Signed up successfully."
-        );
-        setOpenAlert(true);
-        navigate("/"); // Navigate after successful login/signup
+      let payload: string | FormData;
+      let config: { headers: { 'Content-Type': string } };
+  
+      if (isLogin) {
+        // If logging in, prepare a JSON payload
+        payload = JSON.stringify({
+          email: email,
+          password: password
+        });
+        config = {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
       } else {
-        console.error("Authentication failed: No token received");
-        setAlertMessage("Authentication failed.");
+        // If signing up, prepare FormData
+        const formData = new FormData();
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('firstName', firstName);
+        formData.append('lastName', lastName);
+        formData.append('username', username);
+        if (profileImage) {
+          formData.append('profileImage', profileImage);
+        }
+        payload = formData;
+        config = {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        };
+      }
+  
+      const response = await axios.post<AuthResponse>(
+        `http://localhost:8080/api/user/${endpoint}`,
+        payload,
+        config
+      );
+  
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('userId', response.data.user.userId.toString());
+        if (response.data.user.profileImage) {
+          localStorage.setItem('profileImage', response.data.user.profileImage);
+        }
+        // Handle alert message and navigate
+        setAlertMessage(isLogin ? 'Logged in successfully.' : 'Signed up successfully.');
+        setOpenAlert(true);
+        navigate('/'); // Navigate to the home page or another route as needed
+      } else {
+        setAlertMessage('Authentication failed: No token received');
         setOpenAlert(true);
       }
     } catch (error) {
-      console.error("Error occurred:", error);
+      // Improved error handling with TypeScript type guard
       if (axios.isAxiosError(error)) {
-        console.error("Error occurred:", error.response?.data);
-        // Provide more specific error message if available, use a general one otherwise
-        const message =
-          error.response?.data.message ||
-          "Authentication failed due to an unknown error.";
+        const message = error.response?.data?.message || 'Authentication failed due to an unknown error.';
         setAlertMessage(message);
+      } else if (error instanceof Error) {
+        setAlertMessage(error.message);
       } else {
-        // Handle non-Axios errors (if any other type of error can occur here, adjust accordingly)
-        setAlertMessage("An error occurred that is not from an axios request.");
+        setAlertMessage('An unexpected error occurred.');
       }
       setOpenAlert(true);
     }
@@ -77,21 +129,46 @@ const AuthPage: React.FC = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("profileImage");
+    setProfileImageUrl(null);
     setAlertMessage("Logged out successfully.");
     setOpenAlert(true);
-    navigate("/login"); // Redirect to the login page after logout
+    navigate("/login");
   };
 
   const handleContinueAsGuest = () => {
     navigate("/");
   };
 
-  const handleCloseAlert = () => {
+  const handleCloseAlert = (
+    _event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
     setOpenAlert(false);
   };
 
+  
+
+  
+
   return (
     <div className="formContainer">
+      <h2>{isLogin ? "Login" : "Sign Up Form"}</h2>
+      <div className="profileImageContainer">
+        <img
+          src={profileImageUrl || "./images/DefaultProfile.png"}
+          alt="Profile"
+          className={`profileImage ${!profileImageUrl && "defaultImage"}`}
+          onError={({ currentTarget }) => {
+            currentTarget.onerror = null; // prevents looping
+            currentTarget.src = "./images/DefaultProfile.png"; // fallback image if the specified src fails to load
+          }}
+        />
+      </div>
+
       {!isLogin && (
         <>
           <TextField
@@ -112,8 +189,26 @@ const AuthPage: React.FC = () => {
             fullWidth
             margin="normal"
           />
+          <input
+            ref={hiddenFileInput}
+            className="formElement"
+            type="file"
+            style={{ display: "none" }}
+            onChange={handleFileSelect}
+            accept="image/*"
+          />
+          <Button
+            className="button"
+            variant="contained"
+            color="primary"
+            component="span"
+            onClick={handleFileButtonClick}
+            >
+            Upload Profile Image
+            </Button>
         </>
       )}
+
       <TextField
         className="formElement"
         id="email"
@@ -152,7 +247,7 @@ const AuthPage: React.FC = () => {
       >
         {isLogin ? "Login" : "Sign Up"}
       </Button>
-      <Button className="button" onClick={() => setIsLogin(!isLogin)}>
+      <Button className="button" variant="contained" color="secondary" onClick={() => setIsLogin(!isLogin)}>
         {isLogin ? "Create New Account" : "Back to Login"}
       </Button>
       {localStorage.getItem("token") && (
@@ -167,7 +262,7 @@ const AuthPage: React.FC = () => {
       )}
       <Button
         className="button"
-        variant="contained"
+        variant="outlined"
         color="primary"
         onClick={handleContinueAsGuest}
       >
@@ -197,7 +292,7 @@ export default AuthPage;
 // TODO: implement add profile pic on sign up
 // TODO: implement forgot password
 // TODO: implement reset password
-// TODO: implement change password 
+// TODO: implement change password
 // TODO: implement change email
 // TODO: implement change username
 // TODO: implement change profile pic

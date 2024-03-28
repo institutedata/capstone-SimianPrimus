@@ -3,6 +3,7 @@ import cors from 'cors';
 import express from 'express';
 import swaggerUi from 'swagger-ui-express'; 
 import init from './models/index';
+import path from 'path';
 
 const app = express();
 configDotenv();
@@ -16,10 +17,17 @@ import userArtworkRoutes from './routes/originalArtwork';
 import likeRoutes from './routes/likeRoutes';
 import galleryLikeRoutes from './routes/galleryLikeRoutes';
 import swaggerDocument from './swagger.json';
+import fs from 'fs';
 
 app.use(express.json());
 app.use(cors());
 
+const uploadsDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadsDir)){
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
+
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api', serviceRoutes);
 
 // Swagger documentation
