@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import "./Home.css";
+import ProtectedLink from "../ProtectedLink";
 
 const HomePage: React.FC = () => {
   return (
@@ -136,7 +137,7 @@ const HomePage: React.FC = () => {
           boxShadow: 3,
         }}
       >
-        <Link to="/share" style={{ textDecoration: "none" }}>
+        <ProtectedLink to="/share" style={{ textDecoration: "none" }}>
           <CardActionArea>
             <Box
               sx={{
@@ -177,10 +178,11 @@ const HomePage: React.FC = () => {
               />
             </Box>
           </CardActionArea>
-        </Link>
+        </ProtectedLink>
       </Card>
     </Box>
   );
 };
 
 export default HomePage;
+
