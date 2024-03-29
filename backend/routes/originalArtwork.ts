@@ -1,5 +1,6 @@
+import express from "express";
+const router = express.Router();
 import originalArtworkController from '../controllers/originalArtworkControllers';
-import router from './ArtworkRoutes'
 
 router.get('/originalArtwork', originalArtworkController.getOriginalArtworks);
 

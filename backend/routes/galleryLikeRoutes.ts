@@ -1,5 +1,7 @@
+import express from "express";
+const router = express.Router();
 import galleryLikeController from '../controllers/galleryLikeControllers';
-import router from './ArtworkRoutes';
+
 
 router.get('/galleryLike/:likeId', galleryLikeController.getGalleryLike);
 

@@ -1,7 +1,6 @@
 import express from 'express';
-import servicesController from '../controllers/artworkControllers';
-
 const router = express.Router();
+import servicesController from '../controllers/artworkControllers';
 
 // Route to get all artworks from the database
 router.get('/services', servicesController.getAllArtworks);

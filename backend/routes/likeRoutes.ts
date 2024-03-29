@@ -1,5 +1,6 @@
+import express from "express";
+const router = express.Router();
 import likeController from "../controllers/likeControllers";
-import router from "./ArtworkRoutes";
 
 router.get('/like', likeController.getLikes);
 
