@@ -20,6 +20,7 @@ import logoImageDark from "../../assets/ArtHubLogoDark.png";
 import "./NavBar.css";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
+import ProtectedLink from "../ProtectedLink";
 
 interface NavbarProps {
   darkMode: boolean;
@@ -57,6 +58,8 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, handleThemeChange }) => {
         >
           <ListItemText primary="The Creation Hub" />
         </ListItemButton>
+        
+        <ProtectedLink to="/share">
         <ListItemButton
           component={RouterLink}
           to="/share"
@@ -64,6 +67,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, handleThemeChange }) => {
         >
           <ListItemText primary="The Art Hub" />
         </ListItemButton>
+        </ProtectedLink>
         <ListItemButton
           component={RouterLink}
           to="/login"

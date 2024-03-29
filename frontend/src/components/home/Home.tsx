@@ -137,7 +137,7 @@ const HomePage: React.FC = () => {
           boxShadow: 3,
         }}
       >
-        <ProtectedLink to="/share" style={{ textDecoration: "none" }}>
+        <ProtectedLink to="/share">
           <CardActionArea>
             <Box
               sx={{

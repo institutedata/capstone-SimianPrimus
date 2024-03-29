@@ -17,17 +17,14 @@ const ProtectedLink: React.FC<ProtectedLinkProps> = ({ to, children }) => {
     return Boolean(token);
   };
 
-  const handleNavigation = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ): void => {
-    event.preventDefault();
+  const handleNavigation = (): void => {
     if (isAuthenticated()) {
       navigate(to);
     } else {
       setShowSnackbar(true);
       setTimeout(() => {
         navigate("/login");
-      }, 1500); // Redirect to login after showing the Snackbar for 5 seconds
+      }, 1500); // Redirect to login after showing the Snackbar for 1.5 seconds
     }
   };
 
@@ -37,13 +34,12 @@ const ProtectedLink: React.FC<ProtectedLinkProps> = ({ to, children }) => {
 
   return (
     <>
-      <a
-        href={to}
-        onClick={handleNavigation}
-        style={{ textDecoration: "none" }}
+      <div 
+        onClick={handleNavigation} 
+        style={{ cursor: "pointer", textDecoration: "none" }}
       >
         {children}
-      </a>
+      </div>
       <Snackbar
         open={showSnackbar}
         autoHideDuration={5000}

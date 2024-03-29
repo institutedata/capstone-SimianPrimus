@@ -53,18 +53,18 @@ const ArtHub: React.FC = () => {
                 alt="Gallery image"
                 sx={{ width: 240, height: "auto" }} // Fixed image width, auto-adjust height
               />
-              <Button
-                component={Link}
-                to="/addwork"
-                variant="contained"
-                color="primary"
-                sx={{ m: 2,}} // Margin bottom
-              >
-                Share your creations here
-              </Button>
             </Box>
           </CardActionArea>
         </Link>
+        <Button
+          component={Link}
+          to="/addwork"
+          variant="contained"
+          color="primary"
+          sx={{ m: 2 }} // Margin bottom
+        >
+          Share your creations here
+        </Button>
       </Card>
     </Box>
   );
