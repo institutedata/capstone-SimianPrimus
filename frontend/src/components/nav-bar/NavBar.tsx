@@ -51,6 +51,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, handleThemeChange }) => {
         >
           <ListItemText primary="The Art Gallery" />
         </ListItemButton>
+
         <ListItemButton
           component={RouterLink}
           to="/create"
@@ -68,6 +69,17 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, handleThemeChange }) => {
           <ListItemText primary="The Art Hub" />
         </ListItemButton>
         </ProtectedLink>
+
+        <ProtectedLink to="/dashboard">
+        <ListItemButton
+          component={RouterLink}
+          to="/dashboard"
+          className="drawer-item"
+        >
+          <ListItemText primary="The User Dashboard" />
+        </ListItemButton>
+        </ProtectedLink>
+
         <ListItemButton
           component={RouterLink}
           to="/login"
@@ -75,6 +87,7 @@ const Navbar: React.FC<NavbarProps> = ({ darkMode, handleThemeChange }) => {
         >
           <ListItemText primary="Login" />
         </ListItemButton>
+        
         <Switch
           checked={darkMode}
           onChange={handleThemeChange}

@@ -11,12 +11,14 @@ import CreateHub from "../pages/CreateHub";
 import Learn from "../pages/Learn";
 import Collaborate from "../pages/Collaborate";
 import PushIt from "../pages/PushIt";
+import Dashboard from "../pages/Dashboard";
 
 const PageRoutes: React.FC = () => {
     return (
         <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/login" element={<Login/>} />
+        <Route path="/dashboard" element={<Dashboard/>} />
         <Route path="/discover" element={<Gallery/>} />
         <Route path="/share" element={<ArtHubPage/>} />
         <Route path="/create" element={<Create/>} />
