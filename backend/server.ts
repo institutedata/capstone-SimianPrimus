@@ -1,16 +1,9 @@
-import { configDotenv } from 'dotenv';
+import dotenv from 'dotenv';
 import cors from 'cors';
-import express from 'express';
+import express, { Express, Request, Response, NextFunction } from 'express';
 import swaggerUi from 'swagger-ui-express'; 
 import init from './models/index';
 import path from 'path';
-
-const app = express();
-configDotenv();
-
-// Initialize database
-init.init();
-
 import serviceRoutes from './routes/ArtworkRoutes';
 import userRoutes from './routes/userRoutes';
 import userArtworkRoutes from './routes/originalArtwork';
@@ -18,6 +11,12 @@ import likeRoutes from './routes/likeRoutes';
 import galleryLikeRoutes from './routes/galleryLikeRoutes';
 import swaggerDocument from './swagger.json';
 import fs from 'fs';
+
+const app = express();
+dotenv.config();
+
+// Initialize database
+init.init();
 
 app.use(express.json());
 app.use(cors());
@@ -28,7 +27,6 @@ if (!fs.existsSync(uploadsDir)){
 }
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/api', serviceRoutes);
 
 // Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
@@ -39,6 +37,17 @@ app.use('/api/user', userRoutes);
 app.use('/api/originalArtwork', userArtworkRoutes);
 app.use('/api/like', likeRoutes);
 app.use('/api/galleryLike', galleryLikeRoutes);
+
+app.use((error: any, req: Request, res: Response, next: NextFunction) => {
+    console.error('Global error handler:', error);
+    const status = error.statusCode || error.status || 500;
+    res.status(status).json({
+      error: {
+        message: error.message,
+        status: status,
+      },
+    });
+});
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

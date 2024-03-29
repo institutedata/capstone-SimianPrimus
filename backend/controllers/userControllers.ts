@@ -56,7 +56,7 @@ export const loginUser = async (req: Request<{}, {}, LoginRequestBody>, res: Res
 
     // Generate a token for the user
     const token = generateToken(user.userId); // Replace `userId` with appropriate user identifier property
-
+    console.log('User logged in:', user.userId);
     // Exclude the password from the user object before sending it
     const userWithoutPassword = { ...user.get({ plain: true }), password: undefined };
 

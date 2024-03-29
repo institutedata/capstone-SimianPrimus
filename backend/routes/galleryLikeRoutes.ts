@@ -3,21 +3,21 @@ const router = express.Router();
 import galleryLikeController from '../controllers/galleryLikeControllers';
 
 
-router.get('/galleryLike/:likeId', galleryLikeController.getGalleryLike);
+router.get('/:likeId', galleryLikeController.getGalleryLike);
 
-router.post('/galleryLike/:objectID', galleryLikeController.createLikeByObjectId);
+router.post('/:objectID', galleryLikeController.createLikeByObjectId);
 
-router.delete('/galleryLike/delete/:likeId', galleryLikeController.deleteGalleryLike);
+router.delete('/delete/:likeId', galleryLikeController.deleteGalleryLike);
 
-router.delete('/galleryLike/deleteByUserId/:userId', galleryLikeController.deleteGalleryLikeByUserId);
+router.delete('/deleteByUserId/:userId', galleryLikeController.deleteGalleryLikeByUserId);
 
-router.delete('/galleryLike/deleteByObjectId/:objectID', galleryLikeController.deleteGalleryLikeByObjectId);
+router.delete('/deleteByObjectId/:objectID', galleryLikeController.deleteGalleryLikeByObjectId);
 
-router.get('/galleryLikes', galleryLikeController.getGalleryLikes);
+router.get('/', galleryLikeController.getGalleryLikes);
 
-router.get('/galleryLikes/:userId', galleryLikeController.getGalleryLikesByUserId);
+router.get('/:userId', galleryLikeController.getGalleryLikesByUserId);
 
-router.get('/galleryLikes/object/:objectID', galleryLikeController.getGalleryLikesByObjectID);
+router.get('/object/:objectID', galleryLikeController.getGalleryLikesByObjectID);
 
 export default router;
 

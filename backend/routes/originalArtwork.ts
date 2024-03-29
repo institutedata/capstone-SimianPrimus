@@ -2,15 +2,15 @@ import express from "express";
 const router = express.Router();
 import originalArtworkController from '../controllers/originalArtworkControllers';
 
-router.get('/originalArtwork', originalArtworkController.getOriginalArtworks);
+router.get('/', originalArtworkController.getOriginalArtworks);
 
-router.get('/originalArtwork/:artworkId', originalArtworkController.getOriginalArtwork);
+router.post('/', originalArtworkController.createOriginalArtwork);
 
-router.post('/originalArtwork', originalArtworkController.createOriginalArtwork);
+router.get('/:artworkId', originalArtworkController.getOriginalArtwork);
 
-router.put('/originalArtwork/:artworkId', originalArtworkController.updateOriginalArtwork);
+router.put('/:artworkId', originalArtworkController.updateOriginalArtwork);
 
-router.delete('/originalArtwork/:artworkId', originalArtworkController.deleteOriginalArtwork); 
+router.delete('/:artworkId', originalArtworkController.deleteOriginalArtwork); 
 
 export default router;
 

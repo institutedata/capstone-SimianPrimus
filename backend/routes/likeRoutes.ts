@@ -2,12 +2,12 @@ import express from "express";
 const router = express.Router();
 import likeController from "../controllers/likeControllers";
 
-router.get('/like', likeController.getLikes);
+router.get('/', likeController.getLikes);
 
-router.get('/like/:likeId', likeController.getLike);
+router.get('/:likeId', likeController.getLike);
 
-router.post('/like/:artworkId', likeController.createLikeByArtworkId);
+router.post('/:artworkId', likeController.createLikeByArtworkId);
 
-router.delete('/like/delete/:likeId', likeController.deleteLike);
+router.delete('/delete/:likeId', likeController.deleteLike);
 
 export default router;
