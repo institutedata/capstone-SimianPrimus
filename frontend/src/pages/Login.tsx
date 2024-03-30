@@ -4,9 +4,6 @@ import AuthPage from '../components/user/Login'; // Update the path based on the
 const App: React.FC = () => {
   return (
     <div>
-      <h3>
-        Begin Your Masterpiece - Discover, Create, Share.
-      </h3>
       <AuthPage />
     </div>
   );

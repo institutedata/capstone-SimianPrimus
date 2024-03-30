@@ -1,9 +1,12 @@
 import React from 'react';
+import Dash from '../components/user/Dash';
+import { useUserContext } from '../components/UserContext';
 
 const Dashboard: React.FC = () => {
+    const { userData } = useUserContext();
     return (
         <div>
-            <h1>Dashboard</h1>
+            <Dash userData={userData} />
         </div>
     );
 };
