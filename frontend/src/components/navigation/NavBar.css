@@ -30,6 +30,7 @@
 
 .footerLinksContainer {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 10px; /* Gap between links */
   margin-bottom: 5px; /* Bottom margin */
