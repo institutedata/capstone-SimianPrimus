@@ -11,10 +11,11 @@ import {
   Tooltip
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
+import { useUserContext, UserContextType } from "../UserContext";
 
 interface Constituent {
   name: string;
@@ -114,7 +115,6 @@ const GalleryArt: React.FC = () => {
       setLikeCount(history[newHistoryIndex].likeCount);
     } else {
       console.log("No previous artwork to fetch");
-      // Optionally, you can disable the "Previous" button when there's no previous artwork
     }
   };
 
@@ -151,43 +151,52 @@ const GalleryArt: React.FC = () => {
     setOpenSnackbar(false);
   };
 
+  const { userData }: UserContextType = useUserContext(); // Assuming useUserContext provides the userData object
+  const userId: number = userData ? userData.userId : -1; // Default -1 if userData is null or undefined
+
   // Implement the function to handle the like action
   const handleLike = async (objectID: number) => {
-    const token = localStorage.getItem("token");
-
+    const token: string | null = localStorage.getItem("token");
     if (!token) {
       alert("Please log in or sign up to like artworks.");
       navigate("/login");
       return;
     }
+  
+    const requestData = {
+      userId: userId, // Assuming userId is defined where it can be accessed
+      objectID: objectID.toString() // Convert objectID to string if needed
+    };
 
+    console.log("Request data:", requestData);
+  
     try {
+      console.log("Sending POST request to /api/galleryLike with data:", requestData);
       const response = await axios.post<{ message: string; likeCount: number }>(
-        `http://localhost:8080/api/galleryLike/${objectID}`,
-        {},
-        { headers: { Authorization: `Bearer ${token}` } }
+        `http://localhost:8080/api/galleryLike`,
+        requestData,
+        { 
+          headers: { 
+            Authorization: `Bearer ${token}`
+          }
+        }
       );
 
+      console.log("Response from server:", response.data);
+  
       setLiked(true);
       setLikeCount(response.data.likeCount);
       setError("");
       setOpenSnackbar(false);
       console.log("Artwork liked successfully:", response.data.message);
-
+  
       // Handle the response here. For example, updating state.
     } catch (error) {
       console.error("Error liking artwork:", error);
-      // Handle errors here.
+      const errorMessage = (error as AxiosError<{ message: string }>)?.response?.data?.message || "An error occurred while liking the artwork";
+      setError(errorMessage);
+      setOpenSnackbar(true);
     }
-    if (axios.isAxiosError(error)) {
-      const message =
-        error.response?.data.message ||
-        "Unable to like artwork due to an unknown error.";
-      setError(message);
-    } else {
-      setError("An error occurred that is not from an axios request.");
-    }
-    setOpenSnackbar(true);
   };
 
   // Render the Gallery component

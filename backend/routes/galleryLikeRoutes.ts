@@ -5,7 +5,7 @@ import galleryLikeController from '../controllers/galleryLikeControllers';
 
 router.get('/:likeId', galleryLikeController.getGalleryLike);
 
-router.post('/:objectID', galleryLikeController.createLikeByObjectId);
+router.post('/', galleryLikeController.createLikeByObjectId);
 
 router.delete('/delete/:likeId', galleryLikeController.deleteGalleryLike);
 
