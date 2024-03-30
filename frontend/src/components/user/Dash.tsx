@@ -88,12 +88,25 @@ const Dashboard: React.FC = () => {
 
   const handleDeleteAccount = async () => {
     try {
-      // Logic to delete user account
+      const response = await fetch(
+        `http://localhost:8080/api/user/${userData?.userId}`,
+        {
+          method: "DELETE",
+        }
+      );
+  
+      if (!response.ok) {
+        console.error("Error deleting user account:", response.statusText);
+        return;
+      }
+  
       setSnackbarMessage("Account deleted successfully."); // Set the message for account deletion
       setSnackbarOpen(true);
+  
       // Clear user authentication credentials upon account deletion
       localStorage.removeItem("token");
       localStorage.removeItem("profileImage");
+  
       setTimeout(() => {
         navigate("/login"); // Redirect user to login screen after a delay
       }, 3000); // Redirect after 3 seconds
