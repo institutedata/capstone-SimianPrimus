@@ -2,7 +2,8 @@ import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import "./App.css";
 import PageRoutes from "./routes/PageRoutes";
-import NavBar from "./components/nav-bar/NavBar";
+import NavBar from "./components/navigation/NavBar";
+import Footer from "./components/navigation/Footer";
 import { ThemeProvider } from "@mui/material/styles";
 import { lightTheme, darkTheme } from "./components/themes/Theme";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -21,6 +22,7 @@ const App: React.FC = () => {
         <div>
           <NavBar darkMode={darkMode} handleThemeChange={handleThemeChange}/>
           <PageRoutes />
+          <Footer />
         </div>
       </Router>
     </ThemeProvider>
