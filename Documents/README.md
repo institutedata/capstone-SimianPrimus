@@ -4,12 +4,12 @@ ArtHub is an application designed for art lovers and art students. It serves as 
 
 ## Features
 
-* **User Accounts**: Secure authentication to manage personal accounts with features like 'liking gallery artworks', 'sharing original artworks' and 'liking and commenting on original artworks'. User account details can be updated and deleted by the user.
-* **Admin Account**: Administrators account to manage content moderation, account suspension and deletion according to Terms and Conditions.
-* **Artwork Interaction**: Users can interact with an extensive gallery, share via URLs, upload to a 'User Gallery', and make artworks public for broader audience appreciation.
-* **Discover**: Explore random artworks from the database and learn about artists with links to their respective Getty.edu page.
-* **Create**: Access in-app digital art tools to create new artworks and participate in collaborative art projects.
-* **Share**: Share personal artworks with the community for feedback and engagement.
+- **User Accounts**: Secure authentication to manage personal accounts with features like 'liking gallery artworks', 'sharing original artworks' and 'liking and commenting on original artworks'. User account details can be updated and deleted by the user.
+- **Admin Account**: Administrators account to manage content moderation, account suspension and deletion according to Terms and Conditions.
+- **Artwork Interaction**: Users can interact with an extensive gallery, share via URLs, upload to a 'User Gallery', and make artworks public for broader audience appreciation.
+- **Discover**: Explore random artworks from the database and learn about artists with links to their respective Getty.edu page.
+- **Create**: Access in-app digital art tools to create new artworks and participate in collaborative art projects.
+- **Share**: Share personal artworks with the community for feedback and engagement.
 
 ## Getting Started
 
@@ -17,22 +17,29 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-* Node.js and npm installed. You can download them from [here](https://nodejs.org/).
-* A MySQL server running locally or remotely which you can access.
+- Node.js and npm installed. You can download them from [here](https://nodejs.org/).
+- A MySQL server running locally or remotely which you can access.
 
 ### Installation
 
 1. Clone the repo:
+
    ```sh
    git clone https://github.com/institutedata/capstone-SimianPrimus
 
+   ```
+
 2. Install NPM packages:
+
    ```sh
    npm install
+
+   ```
 
 3. Start the development server:
    ```sh
    npm run start:dev
+   ```
 
 ## Testing
 
@@ -40,15 +47,14 @@ To run the automated tests for this system:
 
 npm test
 
-
 ## Built With
 
-* [Express.js](https://expressjs.com/) - The backend framework used
-* [MySQL](https://www.mysql.com/) - Database system
-* [Sequelize](https://sequelize.org/) - Promise-based Node.js ORM for MySQL
-* [React](https://reactjs.org/) - A JavaScript library for building user interfaces
-* [Vite](https://vitejs.dev/) - Next generation frontend tooling
-* [MUI (Material-UI)](https://mui.com/) - React UI framework for faster and easier web development
+- [Express.js](https://expressjs.com/) - The backend framework used
+- [MySQL](https://www.mysql.com/) - Database system
+- [Sequelize](https://sequelize.org/) - Promise-based Node.js ORM for MySQL
+- [React](https://reactjs.org/) - A JavaScript library for building user interfaces
+- [Vite](https://vitejs.dev/) - Next generation frontend tooling
+- [MUI (Material-UI)](https://mui.com/) - React UI framework for faster and easier web development
 
 ## Usage
 
@@ -104,17 +110,17 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Sarah McGregor - [Sarah McGregor](https://www.linkedin.com/in/sarah-leigh-mcgregor/) - email@example.com
+Sarah McGregor - [Sarah McGregor](https://www.linkedin.com/in/sarah-leigh-mcgregor/) - sarahmcgregor24@gmail.com
 
 Project Link: [https://github.com/institutedata/capstone-SimianPrimus](https://github.com/institutedata/capstone-SimianPrimus)
 
 ## Acknowledgements
 
-* [The Metropolitan Museum of Art Collection API](https://metmuseum.github.io/)
-* [React Router](https://reactrouter.com/)
-* [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
-* [bcrypt.js](https://github.com/dcodeIO/bcrypt.js)
-* And all the other libraries and frameworks that have made this possible.
+- [The Metropolitan Museum of Art Collection API](https://metmuseum.github.io/)
+- [React Router](https://reactrouter.com/)
+- [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken)
+- [bcrypt.js](https://github.com/dcodeIO/bcrypt.js)
+- And all the other libraries and frameworks that have made this possible.
 
 ## Troubleshooting/Common Issues
 
@@ -122,7 +128,6 @@ Having issues with the application? Here are some common fixes:
 
 - Data Persistence Issues:
   Ensure that the user's state is initialized correctly throughout the app. Consider using localStorage or sessionStorage to maintain session data across reloads.
-  
 - Failed API Calls:
   Check the network tab in your browser dev tools for failed requests and ensure the backend server is running and accessible.
 
