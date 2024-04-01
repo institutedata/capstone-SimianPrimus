@@ -2,26 +2,29 @@
 
 ## Introduction
 
-For this project, the visual design incorporates both light and dark themes to provide users with a seamless experience. Custom color palettes have been carefully selected to enhance the overall aesthetic without detracting from the artistry of the content. The primary focus is on creating engaging designs that complement the artistic elements while maintaining a cohesive and immersive user experience.
+For this project, the visual design incorporates both light and dark themes to provide users with a seamless experience. Custom colour palettes have been carefully selected to enhance the overall aesthetic without detracting from the artistry of the content. The primary focus is on creating engaging designs that complement the artistic elements while maintaining a cohesive and immersive user experience.
 
 ## Color Palettes
 
 - Light Theme:
 
-  - Primary Color: [Insert primary color for light theme]
-  - Secondary Color: [Insert secondary color for light theme]
-  - Accent Color: [Insert accent color for light theme]
+  - Primary Colour: 3A2B50 Russian Violet
+  - Secondary Colour: FEB1B3 Melon
+  - Accent Colour: FDD9DB Rose
+  - Background Colour: D9E7F4 Alice Blue
 
 - Dark Theme:
-  - Primary Color: [Insert primary color for dark theme]
-  - Secondary Color: [Insert secondary color for dark theme]
-  - Accent Color: [Insert accent color for dark theme]
+  - Primary Colour: BFBAD9 Periwinkle
+  - Secondary Colour: 254D70 Indigo Dye
+  - Accent Colour: FEB1B3 Melon
+  - Background Colour: 3A2b50 Russian Violet
 
 ## Logo Design
 
-- Logo Concept: [Describe the conceptual idea behind the logo design]
-- Logo Colors: [Specify the colors used in the logo]
+- Logo Concept: The logo is designed to have a not so serious vibe.
+- Logo Colors: Dark theme logo: BFBAD9 Periwinkle
+  Light theme logo: 3A2B50 Russian Violet
 
 ## Links
 
-- Figma Design: [Insert link to Figma design here]
+- Figma Design: [ArtHub HiFI Design](https://www.figma.com/file/khzNXnBHdNSOci3Ti5d7xm/ArtHub?type=design&node-id=0%3A1&mode=design&t=fyvtAM4PWO1U6PK5-1)
