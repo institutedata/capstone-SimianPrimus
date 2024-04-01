@@ -8,8 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import "./Create.css";
 
+// CreatePage component
 const CreatePage: React.FC = () => {
   return (
     <Box
@@ -55,7 +55,8 @@ const CreatePage: React.FC = () => {
                     Learn
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Explore the world of art and learn from the best and each other. 
+                    Explore the world of art and learn from the best and each
+                    other.
                   </Typography>
                 </Box>
               </CardContent>
@@ -83,6 +84,7 @@ const CreatePage: React.FC = () => {
           boxShadow: 3,
         }}
       >
+        {/* Link to the createHub page */}
         <Link to="/createHub" style={{ textDecoration: "none" }}>
           <CardActionArea>
             <Box
@@ -105,7 +107,7 @@ const CreatePage: React.FC = () => {
                   }}
                 >
                   <Typography gutterBottom variant="h3" component="div">
-                    Create 
+                    Create
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     Harness your inspiration and create art that speaks to you.
@@ -136,6 +138,7 @@ const CreatePage: React.FC = () => {
           boxShadow: 3,
         }}
       >
+        {/* Link to the collaborate page */}
         <Link to="/collaborate" style={{ textDecoration: "none" }}>
           <CardActionArea>
             <Box
@@ -161,7 +164,8 @@ const CreatePage: React.FC = () => {
                     Collaborate
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Work together on projects and share your ideas with the world.
+                    Work together on projects and share your ideas with the
+                    world.
                   </Typography>
                 </Box>
               </CardContent>
@@ -189,6 +193,7 @@ const CreatePage: React.FC = () => {
           boxShadow: 3,
         }}
       >
+        {/* Link to the pushIt page */}
         <Link to="/pushIt" style={{ textDecoration: "none" }}>
           <CardActionArea>
             <Box
@@ -214,7 +219,8 @@ const CreatePage: React.FC = () => {
                     Push Yourself
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Monthly challenges to push your creativity to the next level.
+                    Monthly challenges to push your creativity to the next
+                    level.
                   </Typography>
                 </Box>
               </CardContent>

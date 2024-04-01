@@ -9,8 +9,9 @@ import {
 } from "@mui/material";
 import { useUserContext } from "../UserContext";
 import { useNavigate } from "react-router-dom";
-import './Login.css'
+import "./Login.css";
 
+// Interface for user data
 interface UserData {
   firstName: string;
   lastName: string;
@@ -18,6 +19,7 @@ interface UserData {
   username: string;
 }
 
+// Dashboard component
 const Dashboard: React.FC = () => {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState("");
@@ -94,19 +96,19 @@ const Dashboard: React.FC = () => {
           method: "DELETE",
         }
       );
-  
+
       if (!response.ok) {
         console.error("Error deleting user account:", response.statusText);
         return;
       }
-  
+
       setSnackbarMessage("Account deleted successfully."); // Set the message for account deletion
       setSnackbarOpen(true);
-  
+
       // Clear user authentication credentials upon account deletion
       localStorage.removeItem("token");
       localStorage.removeItem("profileImage");
-  
+
       setTimeout(() => {
         navigate("/login"); // Redirect user to login screen after a delay
       }, 3000); // Redirect after 3 seconds
@@ -191,3 +193,5 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
+
+// TODO: Ensure user data is persisting after site reload

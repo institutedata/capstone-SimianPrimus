@@ -8,7 +8,7 @@ import {
   Button,
   Modal,
   Box,
-  Tooltip
+  Tooltip,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios, { AxiosError } from "axios";
@@ -17,6 +17,7 @@ import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import { useUserContext, UserContextType } from "../UserContext";
 
+// Define the interfaces for the Artwork and Constituent objects
 interface Constituent {
   name: string;
   role: string;
@@ -39,6 +40,7 @@ interface Artwork {
   constituents: Constituent[];
 }
 
+// Define the GalleryArt component
 const GalleryArt: React.FC = () => {
   const [artwork, setArtwork] = useState<Artwork | null>(null);
   const [liked, setLiked] = useState<boolean>(false);
@@ -73,10 +75,11 @@ const GalleryArt: React.FC = () => {
       setLikeCount(response.data.likeCount);
     } catch (error) {
       console.error("Error fetching random artwork:", error);
-      // Handle error appropriately, possibly by updating the state to show an error message
+      // TODO: Handle error appropriately, possibly by updating the state to show an error message
     }
   };
 
+  // Handle touch events for swipe gestures
   const handleTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
     setStartX(event.touches[0].clientX);
   };
@@ -162,38 +165,43 @@ const GalleryArt: React.FC = () => {
       navigate("/login");
       return;
     }
-  
+
     const requestData = {
-      userId: userId, // Assuming userId is defined where it can be accessed
-      objectID: objectID.toString() // Convert objectID to string if needed
+      userId: userId,
+      objectID: objectID.toString(), // Convert objectID to string if needed
     };
 
     console.log("Request data:", requestData);
-  
+
     try {
-      console.log("Sending POST request to /api/galleryLike with data:", requestData);
+      // Send a POST request to the server to like the artwork
+      console.log(
+        "Sending POST request to /api/galleryLike with data:",
+        requestData
+      );
       const response = await axios.post<{ message: string; likeCount: number }>(
         `http://localhost:8080/api/galleryLike`,
         requestData,
-        { 
-          headers: { 
-            Authorization: `Bearer ${token}`
-          }
+        {
+          // Include the token in the Authorization header
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
       );
 
       console.log("Response from server:", response.data);
-  
+
       setLiked(true);
       setLikeCount(response.data.likeCount);
       setError("");
       setOpenSnackbar(false);
       console.log("Artwork liked successfully:", response.data.message);
-  
-      // Handle the response here. For example, updating state.
     } catch (error) {
       console.error("Error liking artwork:", error);
-      const errorMessage = (error as AxiosError<{ message: string }>)?.response?.data?.message || "An error occurred while liking the artwork";
+      const errorMessage =
+        (error as AxiosError<{ message: string }>)?.response?.data?.message ||
+        "An error occurred while liking the artwork";
       setError(errorMessage);
       setOpenSnackbar(true);
     }
@@ -220,20 +228,20 @@ const GalleryArt: React.FC = () => {
           }}
         >
           <Tooltip title="Click to enlarge" placement="bottom">
-          <CardMedia
-            component="img"
-            sx={{
-              height: 400,
-              objectFit: "contain",
-              width: "100%",
-              maxHeight: "100%",
-              padding: "20px",
-              cursor: 'pointer',
-            }}
-            image={artwork.primaryImage}
-            alt={artwork.title || "Artwork image"}
-            onClick={handleOpenModal}
-          />
+            <CardMedia
+              component="img"
+              sx={{
+                height: 400,
+                objectFit: "contain",
+                width: "100%",
+                maxHeight: "100%",
+                padding: "20px",
+                cursor: "pointer",
+              }}
+              image={artwork.primaryImage}
+              alt={artwork.title || "Artwork image"}
+              onClick={handleOpenModal}
+            />
           </Tooltip>
           {/* CardContent to display artwork details */}
           <CardContent>
@@ -287,8 +295,8 @@ const GalleryArt: React.FC = () => {
           Loading artwork...
         </Typography>
       )}
-       {/* Modal for the enlarged image */}
-       <Modal
+      {/* Modal for the enlarged image */}
+      <Modal
         open={openModal}
         onClose={handleCloseModal}
         aria-labelledby="image-modal-title"
@@ -296,19 +304,19 @@ const GalleryArt: React.FC = () => {
       >
         <Box
           sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            bgcolor: 'background.paper',
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            bgcolor: "background.paper",
             boxShadow: 24,
             p: 4,
           }}
         >
           <img
             src={artwork?.primaryImage}
-            alt={artwork?.title || 'Artwork image'}
-            style={{ maxWidth: '100%', maxHeight: '90vh' }} // Your styles here
+            alt={artwork?.title || "Artwork image"}
+            style={{ maxWidth: "100%", maxHeight: "90vh" }}
           />
         </Box>
       </Modal>
@@ -338,8 +346,6 @@ const GalleryArt: React.FC = () => {
 
 export default GalleryArt;
 
-// TODO: Complete gallery like function. currently throwing non axios error
-// TODO: Add click to enlarge feature to the artwork image
 // TODO: Add a loading spinner while fetching artwork (animation?)
-// TODO: Add a button to view artwork details
+// TODO: Add favourites gallery for liked artworks
 // TODO: Fix cookie issue

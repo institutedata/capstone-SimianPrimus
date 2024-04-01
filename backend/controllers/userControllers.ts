@@ -5,9 +5,10 @@ import jwt from "jsonwebtoken";
 import Models from "../models/userModel";
 import Sequelize from "sequelize";
 import User from "../models/userModel";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 dotenv.config(); // This calls dotenv.config() to load the .env file
 
+// Type definition for the request object with a file property
 interface CustomRequest extends Request {
   file?: Express.Multer.File;
 }
@@ -23,47 +24,62 @@ const generateToken = (userId: string) => {
   if (!process.env.JWT_SECRET) {
     throw new Error("JWT_SECRET is not set in .env file");
   }
-
+  // Generate a token with the userId and the JWT_SECRET from the .env file
   return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "1h" });
 };
 
 // Login user
-export const loginUser = async (req: Request<{}, {}, LoginRequestBody>, res: Response) => {
+export const loginUser = async (
+  req: Request<{}, {}, LoginRequestBody>,
+  res: Response
+) => {
   try {
     const { email, password } = req.body;
-    
+    // Check if email and password are provided
     if (!email || !password) {
-      return res.status(400).json({ message: "Email and password are required." });
+      return res
+        .status(400)
+        .json({ message: "Email and password are required." });
     }
 
     // Find the user with the given email, case-insensitive
     const user = await User.findOne({
       where: Sequelize.where(
-        Sequelize.fn('lower', Sequelize.col('email')),
-        Sequelize.fn('lower', email)
+        Sequelize.fn("lower", Sequelize.col("email")),
+        Sequelize.fn("lower", email)
       ),
     });
 
     if (!user) {
-      return res.status(401).json({ message: "Authentication failed. User not found." });
+      return res
+        .status(401)
+        .json({ message: "Authentication failed. User not found." });
     }
 
     // Compare the provided password with the hash in the database
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(401).json({ message: "Authentication failed. Incorrect password." });
+      return res
+        .status(401)
+        .json({ message: "Authentication failed. Incorrect password." });
     }
 
     // Generate a token for the user
-    const token = generateToken(user.userId); // Replace `userId` with appropriate user identifier property
-    console.log('User logged in:', user.userId);
+    const token = generateToken(user.userId);
+    console.log("User logged in:", user.userId);
     // Exclude the password from the user object before sending it
-    const userWithoutPassword = { ...user.get({ plain: true }), password: undefined };
+    const userWithoutPassword = {
+      ...user.get({ plain: true }),
+      password: undefined,
+    };
 
     return res.json({ user: userWithoutPassword, token });
-  } catch (error: any) { // Consider using a more specific error type if possible
-    console.error('Login error:', error);
-    return res.status(500).json({ message: "An error occurred during the login process." });
+  } catch (error: any) {
+    // Consider using a more specific error type if possible
+    console.error("Login error:", error);
+    return res
+      .status(500)
+      .json({ message: "An error occurred during the login process." });
   }
 };
 
@@ -102,7 +118,7 @@ export const createUser = async (req: CustomRequest, res: Response) => {
       }`;
     }
 
-    // Implement input validation here (e.g., check fields are not empty and password is strong enough)
+    // Implement input validation here
 
     // Check if email or username already exists in the database to handle duplicate entries proactively
     const emailExists = await Models.findOne({
@@ -111,7 +127,7 @@ export const createUser = async (req: CustomRequest, res: Response) => {
     if (emailExists) {
       return res.status(400).json({ message: "This email is already taken." });
     }
-
+    // Check if username already exists in the database
     const usernameExists = await Models.findOne({
       where: { username: username.toLowerCase() },
     });
@@ -129,7 +145,7 @@ export const createUser = async (req: CustomRequest, res: Response) => {
       username: username.toLowerCase(), // Ensure username is always saved in lowercase
       profileImage: imageUrl,
     });
-
+    // Generate a token for the user
     const token = generateToken(newUser.userId.toString());
 
     // Prepare user response (excluding sensitive data like the password)
@@ -161,9 +177,6 @@ export const createUser = async (req: CustomRequest, res: Response) => {
       const messages = error.errors.map((err: any) => err.message).join("; ");
       return res.status(400).json({ message: "Validation error: " + messages });
     } else {
-      // For other kinds of errors, you might not want to send the details to the client,
-      // especially in a production environment, to avoid potential information leakage.
-      // Instead, log them on the server and send a generic message.
       console.error("Error during user creation:", error);
       return res.status(500).json({
         message: "An error occurred during the user creation process.",
@@ -177,11 +190,9 @@ export const updateUser = async (req: CustomRequest, res: any) => {
   const userId = req.params.id;
   const file = req.file;
   let imageUrl: string | null = null;
-
+  // If file was uploaded, construct its URL
   if (file) {
-    imageUrl = `${req.protocol}}://${req.get("host")}/uploads/${
-      file.filename
-    }`;
+    imageUrl = `${req.protocol}}://${req.get("host")}/uploads/${file.filename}`;
   }
 
   try {
@@ -210,7 +221,7 @@ export const updateUser = async (req: CustomRequest, res: any) => {
     console.error("Error during user update:", error);
     res.status(500).json({ message: error.message });
   }
-}; 
+};
 
 // Delete a user
 export const deleteUser = async (req: any, res: any) => {

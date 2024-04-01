@@ -1,9 +1,10 @@
 import { DataTypes, Model } from "sequelize";
 import dbConnect from "../dbConnect";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 
 const sequelize = dbConnect.Sequelize;
 
+// Define the User model
 class User extends Model {
   [x: string]: any;
 }
@@ -16,18 +17,18 @@ User.init(
       autoIncrement: true,
     },
     firstName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        },
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     lastName: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        },
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     email: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-        },
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -37,19 +38,19 @@ User.init(
       allowNull: false,
     },
     profileImage: {
-        type: DataTypes.STRING,
-        allowNull: true,
-        },
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     createdAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
-        },
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
     updatedAt: {
-        type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
-        },
+      type: DataTypes.DATE,
+      allowNull: false,
+      defaultValue: DataTypes.NOW,
+    },
   },
   {
     sequelize,
@@ -60,10 +61,9 @@ User.init(
       beforeCreate: async (user: User) => {
         const hashedPassword = await bcrypt.hash(user.password, 10);
         user.password = hashedPassword;
-      }
-    }
+      },
+    },
   }
 );
 
 export default User;
-

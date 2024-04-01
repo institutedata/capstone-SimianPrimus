@@ -1,5 +1,6 @@
-import { Model } from 'sequelize';
+import { Model } from "sequelize";
 
+// Define the Constituent interface
 class Constituent extends Model {
   public constituentID!: number;
   public role!: string;

@@ -14,22 +14,22 @@ import PushIt from "../pages/PushIt";
 import Dashboard from "../pages/Dashboard";
 
 const PageRoutes: React.FC = () => {
-    return (
-        <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/dashboard" element={<Dashboard/>} />
-        <Route path="/discover" element={<Gallery/>} />
-        <Route path="/share" element={<ArtHubPage/>} />
-        <Route path="/create" element={<Create/>} />
-        <Route path="/addwork" element={<AddArtworks/>} />
-        <Route path="/userGallery" element={<UserGallery/>} />
-        <Route path="/createHub" element={<CreateHub/>} />
-        <Route path="/learn" element={<Learn/>} />
-        <Route path="/collaborate" element={<Collaborate/>} />
-        <Route path="/pushIt" element={<PushIt/>} />
-        </Routes>
-    );
-    };
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/dashboard" element={<Dashboard userData={null} />} />
+      <Route path="/discover" element={<Gallery />} />
+      <Route path="/share" element={<ArtHubPage />} />
+      <Route path="/create" element={<Create />} />
+      <Route path="/addwork" element={<AddArtworks />} />
+      <Route path="/userGallery" element={<UserGallery />} />
+      <Route path="/createHub" element={<CreateHub />} />
+      <Route path="/learn" element={<Learn />} />
+      <Route path="/collaborate" element={<Collaborate />} />
+      <Route path="/pushIt" element={<PushIt />} />
+    </Routes>
+  );
+};
 
 export default PageRoutes;

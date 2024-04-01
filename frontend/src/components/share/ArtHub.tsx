@@ -9,7 +9,6 @@ import {
   Button,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import "./ArtHub.css";
 
 const ArtHub: React.FC = () => {
   return (
@@ -61,7 +60,13 @@ const ArtHub: React.FC = () => {
           to="/addwork"
           variant="contained"
           color="primary"
-          sx={{ m: 2 }} // Margin bottom
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            p: 2, // Padding around the button
+            m: 2, // Margin around the button
+          }}
         >
           Share your creations here
         </Button>

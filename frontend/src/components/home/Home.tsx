@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@mui/material";
 import { Link } from "react-router-dom";
-import "./Home.css";
 import ProtectedLink from "../ProtectedLink";
 
 const HomePage: React.FC = () => {
@@ -56,7 +55,8 @@ const HomePage: React.FC = () => {
                     Discover Art
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Explore a world of creativity from The Metropolitan Museum of Art.
+                    Explore a world of creativity from The Metropolitan Museum
+                    of Art.
                   </Typography>
                 </Box>
               </CardContent>
@@ -109,7 +109,8 @@ const HomePage: React.FC = () => {
                     Create Art
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Learn, create, collaborate and push your creative boundaries.
+                    Learn, create, collaborate and push your creative
+                    boundaries.
                   </Typography>
                 </Box>
               </CardContent>
@@ -162,7 +163,8 @@ const HomePage: React.FC = () => {
                     Share Art
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
-                    Share creations, get feedback, and connect with other artists.
+                    Share creations, get feedback, and connect with other
+                    artists.
                   </Typography>
                 </Box>
               </CardContent>
@@ -185,4 +187,3 @@ const HomePage: React.FC = () => {
 };
 
 export default HomePage;
-

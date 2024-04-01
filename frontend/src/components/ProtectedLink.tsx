@@ -3,15 +3,18 @@ import { useNavigate } from "react-router-dom";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
+// ProtectedLink component redirects to login page if user is not authenticated
+// ProtectedLink props
 interface ProtectedLinkProps {
   to: string;
   children: React.ReactNode;
 }
 
+// ProtectedLink component
 const ProtectedLink: React.FC<ProtectedLinkProps> = ({ to, children }) => {
   const navigate = useNavigate();
   const [showSnackbar, setShowSnackbar] = useState(false);
-
+  // Check if user is authenticated
   const isAuthenticated = (): boolean => {
     const token: string | null = localStorage.getItem("token");
     return Boolean(token);
@@ -34,8 +37,8 @@ const ProtectedLink: React.FC<ProtectedLinkProps> = ({ to, children }) => {
 
   return (
     <>
-      <div 
-        onClick={handleNavigation} 
+      <div
+        onClick={handleNavigation}
         style={{ cursor: "pointer", textDecoration: "none" }}
       >
         {children}

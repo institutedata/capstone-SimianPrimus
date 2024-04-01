@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import Like from "../models/likeModel";
 import Artwork from "../models/artworkModel";
 
+// Create a like for an artwork by objectID
 export const createLikeByObjectId = async (req: Request, res: Response) => {
   try {
     const { userId, objectID } = req.body;
@@ -28,7 +29,7 @@ export const createLikeByObjectId = async (req: Request, res: Response) => {
 
     // Ensure the artwork instance is reloaded to reflect the new likeCount
     await artwork.reload();
-
+    // Return the like and the updated likeCount
     res.json({
       like,
       likeCount: artwork.likeCount,
@@ -38,10 +39,10 @@ export const createLikeByObjectId = async (req: Request, res: Response) => {
   }
 };
 
+// Delete a like by likeId
 export const deleteGalleryLike = async (req: any, res: any) => {
   try {
-    const like = await Like.findByPk(req.params.likeId);
-
+    const like = await Like.findByPk(req.params.likeId); // Find the like by likeId
     if (!like) {
       console.log(`Like with likeId ${req.params.likeId} not found`);
       return res
@@ -63,6 +64,7 @@ export const deleteGalleryLike = async (req: any, res: any) => {
   }
 };
 
+// Delete a like by objectID
 export const deleteGalleryLikeByObjectId = async (req: any, res: any) => {
   try {
     const like = await Like.findOne({
@@ -75,7 +77,9 @@ export const deleteGalleryLikeByObjectId = async (req: any, res: any) => {
       console.log(`Like with objectID ${req.params.objectID} not found`);
       return res
         .status(404)
-        .json({ message: `Like with objectID ${req.params.objectID} not found` });
+        .json({
+          message: `Like with objectID ${req.params.objectID} not found`,
+        });
     }
 
     console.log(`Deleting like with objectID: ${req.params.objectID}`);
@@ -92,6 +96,7 @@ export const deleteGalleryLikeByObjectId = async (req: any, res: any) => {
   }
 };
 
+// Delete a like by userId !Important will delete all likes by userId
 export const deleteGalleryLikeByUserId = async (req: any, res: any) => {
   try {
     const like = await Like.findOne({
@@ -121,6 +126,7 @@ export const deleteGalleryLikeByUserId = async (req: any, res: any) => {
   }
 };
 
+// Get all likes. For testing purposes
 export const getGalleryLikes = async (_req: Request, res: Response) => {
   try {
     const likes = await Like.findAll();
@@ -130,6 +136,7 @@ export const getGalleryLikes = async (_req: Request, res: Response) => {
   }
 };
 
+// Get a like by likeId. For testing purposes
 export const getGalleryLike = async (req: Request, res: Response) => {
   try {
     const like = await Like.findByPk(req.params.likeId);
@@ -142,6 +149,7 @@ export const getGalleryLike = async (req: Request, res: Response) => {
   }
 };
 
+// Get all likes by userId. For favorites page
 export const getGalleryLikesByUserId = async (req: Request, res: Response) => {
   try {
     const likes = await Like.findAll({
@@ -155,6 +163,7 @@ export const getGalleryLikesByUserId = async (req: Request, res: Response) => {
   }
 };
 
+// Get all likes by objectID. For future use
 export const getGalleryLikesByObjectID = async (
   req: Request,
   res: Response
@@ -165,7 +174,7 @@ export const getGalleryLikesByObjectID = async (
         objectID: req.params.objectID,
       },
     });
-    console.log("objectID:", req.params.objectID)
+    console.log("objectID:", req.params.objectID);
     res.json(likes);
   } catch (error: any) {
     res.status(500).json({ message: error.message });

@@ -1,4 +1,4 @@
-import { createTheme, ThemeOptions } from '@mui/material/styles';
+import { createTheme, ThemeOptions } from "@mui/material/styles";
 
 const commonThemeOptions: ThemeOptions = {
   typography: {
@@ -8,18 +8,18 @@ const commonThemeOptions: ThemeOptions = {
     fontWeightRegular: 400,
     fontSize: 24,
     button: {
-      textTransform: 'none',
-      fontSize: '2rem',
+      textTransform: "none",
+      fontSize: "2rem",
       fontWeight: 700,
     },
     h1: {
-      fontSize: '4rem',
+      fontSize: "4rem",
     },
     h2: {
-      fontSize: '3.5rem',
+      fontSize: "3.5rem",
     },
     h3: {
-      fontSize: '3rem',
+      fontSize: "3rem",
     },
   },
   components: {
@@ -40,8 +40,7 @@ const commonThemeOptions: ThemeOptions = {
     },
     MuiTextField: {
       styleOverrides: {
-        root: {
-        },
+        root: {},
       },
     },
     MuiListItemButton: {
@@ -58,25 +57,25 @@ const commonThemeOptions: ThemeOptions = {
         },
       },
     },
-    // Add more component overrides if needed
+    // Add additional component overrides
   },
-  // Add any additional global MUI customizations
+  // Add global MUI customizations
 };
 
 export const lightTheme = createTheme({
   ...commonThemeOptions,
   palette: {
-    mode: 'light',
-    // Define the colors for your light theme
+    mode: "light",
+
     primary: {
-      main: '#feb1b3', // example primary color
+      main: "#feb1b3",
     },
     secondary: {
-      main: '#fdd9db', // example secondary color
+      main: "#fdd9db",
     },
     background: {
-      default: '#d9e7f4', // light theme background
-      paper: '#bfbad9', // for components with a "paper" background, like Card
+      default: "#d9e7f4", // light theme background
+      paper: "#bfbad9", // for components with a "paper" background, like Card
     },
     // You can also define other colors like error, warning, info, success
   },
@@ -86,17 +85,16 @@ export const lightTheme = createTheme({
 export const darkTheme = createTheme({
   ...commonThemeOptions,
   palette: {
-    mode: 'dark',
-    // Define the colors for your dark theme
+    mode: "dark",
     primary: {
-      main: '#90caf9', // example primary color for dark theme
+      main: "#90caf9",
     },
     secondary: {
-      main: '#ffe082', // example secondary color for dark theme
+      main: "#ffe082",
     },
     background: {
-      default: '#3a2b50', // dark theme background
-      paper: '#254d70', // for components with a "paper" background, like Card
+      default: "#3a2b50", // dark theme background
+      paper: "#254d70", // for components with a "paper" background, like Card
     },
     // You can also define other colors like error, warning, info, success
   },
