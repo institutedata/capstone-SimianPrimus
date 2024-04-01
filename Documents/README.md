@@ -126,8 +126,6 @@ Project Link: [https://github.com/institutedata/capstone-SimianPrimus](https://g
 
 Having issues with the application? Here are some common fixes:
 
-- Data Persistence Issues:
-  Ensure that the user's state is initialized correctly throughout the app. Consider using localStorage or sessionStorage to maintain session data across reloads.
 - Failed API Calls:
   Check the network tab in your browser dev tools for failed requests and ensure the backend server is running and accessible.
 
