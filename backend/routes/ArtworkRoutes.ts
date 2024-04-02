@@ -1,24 +1,33 @@
-import express from 'express';
+import express from "express";
 const router = express.Router();
-import servicesController from '../controllers/artworkControllers';
+import servicesController from "../controllers/artworkControllers";
 
 // Route to get all artworks from the database
-router.get('/', servicesController.getAllArtworks);
+router.get("/", servicesController.getAllArtworks);
 
 // Route to start the sync process, fetching object IDs and their details from the Met API
 // and updating the database accordingly
-router.get('/sync', servicesController.fetchObjectIDs);
+router.get("/sync", servicesController.fetchObjectIDs);
 
 // Route to get a random artwork from the database
-router.get('/random', servicesController.getRandomArtwork);
+router.get("/random", servicesController.getRandomArtwork);
+
+// Route to fetch a specific artwork by title from the database
+router.get("/title/:title", servicesController.getArtworkByTitle);
+
+// Route to fetch artwork by constituents name from the database
+router.get("/constituent/:name", servicesController.getArtworksByConstituent);
+
+// Route to fetch artwork by department from the database
+router.get("/artwork/:department", servicesController.getArtworksByDepartment);
 
 // Route to fetch a specific artwork by ObjectID from the database
-router.get('/artwork/:objectID', servicesController.getArtwork);
+router.get("/artwork/:objectID", servicesController.getArtwork);
 
 // Route to update an artwork in the database by ObjectID
-router.put('/:objectID', servicesController.updateArtwork);
+router.put("/:objectID", servicesController.updateArtwork);
 
 // Route to delete an artwork from the database by ObjectID
-router.delete('/delete/:objectID', servicesController.deleteArtwork);
+router.delete("/delete/:objectID", servicesController.deleteArtwork);
 
 export default router;

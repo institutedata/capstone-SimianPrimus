@@ -1,8 +1,10 @@
 import axios from "axios";
 import { Request, Response } from "express";
 import Artwork from "../models/artworkModel";
-import sequelize from "../dbConnect";
+import db from "../dbConnect";
 import { literal } from "sequelize";
+
+const sequelize = db.Sequelize;
 
 // Fetch object IDs from the Met API and save them to the database
 export const fetchObjectIDs = async (
@@ -157,6 +159,98 @@ export const getArtwork = async (
   }
 };
 
+// Get artwork by title
+export const getArtworkByTitle = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const title = req.params.title;
+    const artwork = await Artwork.findOne({
+      where: {
+        title,
+      },
+    });
+    if (artwork) {
+      res.json(artwork);
+    } else {
+      res.status(404).json({ error: `Artwork with title ${title} not found.` });
+    }
+  } catch (error: any) {
+    if (error instanceof Error) {
+      console.error("Error fetching artwork:", error.message);
+      res.status(500).json({ error: "Internal server error" });
+    } else {
+      console.error("Unknown error occurred:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+};
+
+// Get 20 artworks by constituents name
+export const getArtworksByConstituent = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const name = req.params.name;
+    const escapedName = sequelize.escape(`{"name": "${name}"}`);
+
+    const artworks = await Artwork.findAll({
+      where: sequelize.literal(`JSON_CONTAINS(constituents, ${escapedName})`),
+      limit: 20,
+    });
+    if (artworks.length > 0) {
+      res.json(artworks);
+    } else {
+      res.status(404).json({
+        error: `Artworks with constituent name ${name} not found.`,
+      });
+    }
+  } catch (error: any) {
+    if (error instanceof Error) {
+      console.error("Error fetching artworks:", error.message);
+      res.status(500).json({ error: "Internal server error" });
+    } else {
+      console.error("Unknown error occurred:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+};
+
+// Get 20 artworks by department
+export const getArtworksByDepartment = async (
+  req: Request,
+  res: Response
+): Promise<void> => {
+  try {
+    const department = req.params.department;
+    console.log(department);
+    const artworks = await Artwork.findAll({
+      where: {
+        department,
+      },
+      limit: 20,
+    });
+    if (artworks.length > 0) {
+      console.log(artworks);
+      res.json(artworks);
+    } else {
+      res.status(404).json({
+        error: `Artworks in department ${department} not found.`,
+      });
+    }
+  } catch (error: any) {
+    if (error instanceof Error) {
+      console.error("Error fetching artworks:", error.message);
+      res.status(500).json({ error: "Internal server error" });
+    } else {
+      console.error("Unknown error occurred:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  }
+};
+
 // Get all artworks
 export const getAllArtworks = async (
   _req: Request,
@@ -202,7 +296,7 @@ export const getRandomArtwork = async (
   }
 };
 
-// Update artwork by objectID
+// Update artwork by objectID. For admin use only.
 export const updateArtwork = async (
   req: Request,
   res: Response
@@ -234,7 +328,7 @@ export const updateArtwork = async (
   }
 };
 
-// Delete artwork by objectID
+// Delete artwork by objectID. For admin use only.
 export const deleteArtwork = async (
   req: Request,
   res: Response
@@ -275,4 +369,7 @@ export default {
   updateArtwork,
   deleteArtwork,
   getRandomArtwork,
+  getArtworkByTitle,
+  getArtworksByConstituent,
+  getArtworksByDepartment,
 };
