@@ -37,6 +37,16 @@ Like.init(
     modelName: "like",
     tableName: "Likes",
     timestamps: true,
+    indexes: [
+      {
+        unique: true,
+        fields: ["userId", "objectID"],
+      },
+      {
+        unique: true,
+        fields: ["userId", "artworkId"],
+      },
+    ],
   }
 );
 

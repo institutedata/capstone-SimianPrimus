@@ -75,11 +75,9 @@ export const deleteGalleryLikeByObjectId = async (req: any, res: any) => {
 
     if (!like) {
       console.log(`Like with objectID ${req.params.objectID} not found`);
-      return res
-        .status(404)
-        .json({
-          message: `Like with objectID ${req.params.objectID} not found`,
-        });
+      return res.status(404).json({
+        message: `Like with objectID ${req.params.objectID} not found`,
+      });
     }
 
     console.log(`Deleting like with objectID: ${req.params.objectID}`);
@@ -89,6 +87,12 @@ export const deleteGalleryLikeByObjectId = async (req: any, res: any) => {
         objectID: req.params.objectID,
       },
     });
+
+    // Increment the likeCount for this artwork if it exists
+    const artwork = await Artwork.findByPk(req.params.objectID);
+    if (artwork) {
+      await artwork.decrement("likeCount", { by: 1 });
+    }
 
     res.json({ message: `Like with objectID ${req.params.objectID} deleted` });
   } catch (error: any) {

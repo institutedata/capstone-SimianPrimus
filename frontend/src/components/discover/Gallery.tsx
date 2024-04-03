@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
@@ -168,43 +168,68 @@ const GalleryArt: React.FC = () => {
 
     const requestData = {
       userId: userId,
-      objectID: objectID.toString(), // Convert objectID to string if needed
+      objectID: objectID.toString(),
     };
 
     console.log("Request data:", requestData);
 
     try {
-      // Send a POST request to the server to like the artwork
-      console.log(
-        "Sending POST request to /api/galleryLike with data:",
-        requestData
-      );
-      const response = await axios.post<{ message: string; likeCount: number }>(
-        `http://localhost:8080/api/galleryLike`,
-        requestData,
-        {
-          // Include the token in the Authorization header
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      console.log("Response from server:", response.data);
-
-      setLiked(true);
-      setLikeCount(response.data.likeCount);
-      setError("");
-      setOpenSnackbar(false);
-      console.log("Artwork liked successfully:", response.data.message);
+      if (!liked) {
+        // The user has not liked this artwork yet; process the like.
+        await processLike(requestData, token);
+      } else {
+        // The user has already liked this artwork; process the unlike.
+        await processUnlike(objectID, token);
+      }
     } catch (error) {
-      console.error("Error liking artwork:", error);
-      const errorMessage =
-        (error as AxiosError<{ message: string }>)?.response?.data?.message ||
-        "An error occurred while liking the artwork";
-      setError(errorMessage);
-      setOpenSnackbar(true);
+      console.error("Error processing like/unlike artwork:", error);
+      handleError(error);
     }
+  };
+
+  const processLike = async (
+    requestData: { userId: number; objectID: string },
+    token: string
+  ) => {
+    const response = await axios.post<{ message: string; likeCount: number }>(
+      `http://localhost:8080/api/galleryLike`,
+      requestData,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setLiked(true);
+    setLikeCount(response.data.likeCount);
+    console.log("Artwork liked successfully:", response.data.message);
+  };
+
+  const processUnlike = async (objectID: number, token: string) => {
+    const response = await axios.delete<{ message: string }>(
+      `http://localhost:8080/api/galleryLike/deleteByObjectId/${objectID}`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setLiked(false);
+    // Assuming `likeCount` is a state representing the count of likes, decrement it.
+    setLikeCount((prevCount) => prevCount - 1);
+    console.log("Artwork unliked successfully:", response.data.message);
+  };
+
+  const handleError = (error: unknown) => {
+    const errorMessage =
+      (error as { response?: { data?: { message?: string } } })?.response?.data
+        ?.message ||
+      (error as Error).message ||
+      "An error occurred while processing your request.";
+    setError(errorMessage);
+    setOpenSnackbar(true);
   };
 
   // Render the Gallery component
