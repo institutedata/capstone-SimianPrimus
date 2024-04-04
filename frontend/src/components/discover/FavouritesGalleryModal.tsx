@@ -41,6 +41,8 @@ interface IFavouritesGalleryModalProps {
   onClose: () => void;
   userId: number;
   token: string | null;
+  likedArtworks: IArtwork[];
+  currentIndex: number;
 }
 
 const FavouritesGalleryModal: React.FC<IFavouritesGalleryModalProps> = ({
