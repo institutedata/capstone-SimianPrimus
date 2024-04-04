@@ -1,9 +1,9 @@
 ```mermaid
-    gantt 
+    gantt
     dateFormat  YYYY-MM-DD
     title Artopia Development Timeline
 
-    section Planning                    
+    section Planning
     Project Documentation               :doc1, 2024-02-20, 2024-04-04
 
     section Backend
@@ -29,5 +29,5 @@
     Prepare Presentation & Demo         :active,  pd, after cr, 2d
     Final Deployment                    :         fd, after pd, 2d
 
-    endDate                             :         2024-04-04
+    endDate                             :         2024-04-06
 ```
