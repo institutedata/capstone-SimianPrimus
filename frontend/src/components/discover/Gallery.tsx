@@ -16,6 +16,8 @@ import { useNavigate } from "react-router-dom";
 import Alert from "@mui/material/Alert";
 import Snackbar from "@mui/material/Snackbar";
 import { useUserContext, UserContextType } from "../UserContext";
+import FavouritesGalleryModal from "./FavouritesGalleryModal";
+import ErrorBoundary from "../error-handling/ErrorBoundary";
 
 // Define the interfaces for the Artwork and Constituent objects
 interface Constituent {
@@ -53,6 +55,8 @@ const GalleryArt: React.FC = () => {
   const [error, setError] = useState<string>("");
   const [openSnackbar, setOpenSnackbar] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState(false);
+  const [isFavouritesModalOpen, setIsFavouritesModalOpen] =
+    useState<boolean>(false);
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -232,6 +236,10 @@ const GalleryArt: React.FC = () => {
     setOpenSnackbar(true);
   };
 
+  const openFavouritesModal = () => setIsFavouritesModalOpen(true);
+  const closeFavouritesModal = () => setIsFavouritesModalOpen(false);
+  const token = localStorage.getItem("token");
+
   // Render the Gallery component
   return (
     <div
@@ -285,9 +293,9 @@ const GalleryArt: React.FC = () => {
                       return (
                         <React.Fragment key={artist.constituentID}>
                           {delimiter}
-                          {artist.constituentWikidata_URL ? (
+                          {artist.constituentULAN_URL ? (
                             <a
-                              href={artist.constituentWikidata_URL}
+                              href={artist.constituentULAN_URL}
                               target="_blank"
                               rel="noopener noreferrer"
                             >
@@ -313,6 +321,17 @@ const GalleryArt: React.FC = () => {
             <Typography component="span">
               {likeCount} {likeCount === 1 ? "Like" : "Likes"}
             </Typography>
+            <Button onClick={openFavouritesModal}>Show Favourites</Button>
+            <ErrorBoundary>
+              <FavouritesGalleryModal
+                isOpen={isFavouritesModalOpen}
+                onClose={closeFavouritesModal}
+                token={token}
+                userId={0}
+                likedArtworks={[]}
+                currentIndex={0}
+              />
+            </ErrorBoundary>
           </CardContent>
         </Card>
       ) : (

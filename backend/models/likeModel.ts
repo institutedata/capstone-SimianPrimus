@@ -2,6 +2,7 @@ import { DataTypes, Model } from "sequelize";
 import dbConnect from "../dbConnect";
 import OriginalArtwork from "./originalArtwork";
 import Artwork from "./artworkModel";
+import User from "./userModel";
 
 // Connect to the database
 const sequelize = dbConnect.Sequelize;
@@ -58,7 +59,23 @@ Like.belongsTo(OriginalArtwork, {
 // Define the relationships between the models
 Like.belongsTo(Artwork, {
   foreignKey: "objectID",
+  as: "artwork",
   targetKey: "objectID",
+});
+
+Artwork.hasMany(Like, {
+  foreignKey: "objectID",
+  as: "likes",
+});
+
+Like.belongsTo(User, {
+  foreignKey: "userId",
+  targetKey: "userId",
+});
+
+User.hasMany(Like, {
+  foreignKey: "userId",
+  sourceKey: "userId",
 });
 
 export default Like;

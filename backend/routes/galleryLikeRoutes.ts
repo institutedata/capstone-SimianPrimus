@@ -27,7 +27,7 @@ router.delete(
 router.get("/", galleryLikeController.getGalleryLikes);
 
 // Route for getting all likes by user ID
-router.get("/:userId", galleryLikeController.getGalleryLikesByUserId);
+router.get("/like/:userId", galleryLikeController.getGalleryLikesByUserId);
 
 // Route for getting all likes by object ID
 router.get(

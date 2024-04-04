@@ -156,11 +156,23 @@ export const getGalleryLike = async (req: Request, res: Response) => {
 // Get all likes by userId. For favorites page
 export const getGalleryLikesByUserId = async (req: Request, res: Response) => {
   try {
+    const userId = parseInt(req.params.userId, 10);
+
+    if (isNaN(userId)) {
+      return res.status(400).json({ message: "Invalid userId" });
+    }
+
     const likes = await Like.findAll({
-      where: {
-        userId: req.params.userId,
-      },
+      where: { userId: userId },
+      include: [
+        {
+          model: Artwork,
+          as: "artwork", // This is the alias for the Artwork model
+          required: true,
+        },
+      ],
     });
+    console.log("likes:", likes); // Debugging
     res.json(likes);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
