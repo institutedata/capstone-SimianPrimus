@@ -215,7 +215,7 @@
                             "type": "string"
                         },
                         "required": true,
-                        "example": "William P. Babcock"
+                        "example": "William Trost Richards"
                     }
                 ],
                 "responses": {
@@ -244,6 +244,33 @@
                         },
                         "required": true,
                         "example": "European Paintings"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/galleryLike/like/{userId}": {
+            "get": {
+                "tags": [
+                    "Artworks"
+                ],
+                "summary": "http://localhost:8080/api/galleryLike/like/:userId",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "33"
                     }
                 ],
                 "responses": {
