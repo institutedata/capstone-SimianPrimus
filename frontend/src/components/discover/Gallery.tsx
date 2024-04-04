@@ -141,6 +141,7 @@ const GalleryArt: React.FC = () => {
           "http://localhost:8080/api/services/random"
         );
         setArtwork(response.data);
+        console.log("Fetched next artwork:", response.data);
         // Update the artwork history with the newly fetched artwork
         const newHistory = [...history, response.data];
         setHistory(newHistory);
@@ -240,6 +241,7 @@ const GalleryArt: React.FC = () => {
   const closeFavouritesModal = () => setIsFavouritesModalOpen(false);
   const token = localStorage.getItem("token");
 
+  console.log("Artwork:", artwork);
   // Render the Gallery component
   return (
     <div
