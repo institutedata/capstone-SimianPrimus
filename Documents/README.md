@@ -1,15 +1,171 @@
 # ArtHub
 
-ArtHub is an application designed for art lovers and art students. It serves as a platform to engage with artworks, participate in communal art projects, and utilize digital art tools for personal creations.
+Welcome to ArtHub, where creativity meets community—a digital sanctuary crafted for artists, art students, and enthusiasts from all corners of the globe. Drawing from the illustrious collection of The Metropolitan Museum of Art, we've built a bridge between history's most treasured artworks and today's digital landscape.
+
+ArtHub offers a rich, interactive platform that allows users to explore the depth and diversity of art. Users can marvel at the masterpieces housed within The Met, or dive into our comprehensive suite of digital creation tools to bring their artistic visions to life. Beyond mere appreciation, ArtHub fosters a vibrant space where creators can share their work, connect with fellow art lovers, and engage actively in a thriving artistic ecosystem.
+
+Whether you're looking to immerse yourself in the world's finest art, create and share your own pieces, or participate in community-driven art projects, ArtHub is your destination. Our mission is to democratize access to art, fuel creativity, and build a connected community of art aficionados and creators alike.
+
+Join us at ArtHub—your portal to art discovery, creation, and collaboration.
+
+## Planning and Design
+
+Designing ArtHub has been an exercise in balancing aesthetics with functionality. Our goal has been to create a visually relaxing environment that does not distract from the featured artwork, while also ensuring a seamless user experience. Here’s a glance at some of the design and planning resources that have gone into making ArtHub intuitive and enjoyable to use.
+
+### Wireframes
+
+Early-stage wireframing was crucial in mapping out the user interface and experience. The wireframes laid the foundation for ArtHub’s user flow, ensuring a logical transition between different sections and functionalities of the website.
+
+![ArtHub Wireframe](./Documents/Illustration/ArtHub-wireframe.jpg)
+
+_Wireframe showcasing the basic layout and design architecture of ArtHub._
+
+### Color Palette and Theme
+
+Through careful consideration, we have developed a color palette and themes that complement the artistic content and create a soothing browsing experience. To view the light and dark themes along with the custom colors, please refer to our [Visual Design document](./Documents/Mock-up/visualDesigns.md).
+
+### Figma Designs
+
+Our Figma designs delve deeper into the aesthetic aspects of ArtHub, reflecting our choice of typography, spacing, and the overall look and feel. You can explore our intricate designs and thought process on [Figma](https://www.figma.com/file/khzNXnBHdNSOci3Ti5d7xm/ArtHub?type=design&node-id=0%3A1&mode=design&t=fyvtAM4PWO1U6PK5-1).
+
+### Entity Relationship Diagram (ERD)
+
+The ERD outlines the database schema and the relationships between data entities which are critical for the backend structure of ArtHub.
+
+```mermaid
+erDiagram
+    User ||--o{ Like : "1..*"
+    User ||--o{ Comment : "1..*"
+    User ||--o{ OriginalArtwork : "1..*"
+    User ||--o{ Gallery : "1..*"
+    OriginalArtwork ||--o{ Comment : "1..*"
+    OriginalArtwork ||--o{ Like : "1..*"
+    Gallery ||--o{ Artwork : "1..*"
+    Artwork ||--o{ Like : "1..*"
+
+    User {
+        int userId(PK)
+        string firstName
+        string lastName
+        string email
+        string username
+        string password
+        img profileImage
+        date createdAt
+        date updatedAt
+    }
+
+    Gallery {
+        int galleryId(PK)
+        string userId(FK)
+        int objectID(FK)
+        date createdAt
+    }
+
+    Artwork {
+        int id(PK)
+        int objectID(PK)
+        string primaryImage
+        string department
+        string title
+        string[] constituents
+        string medium
+        string dimensions
+        int likeCount
+    }
+
+    OriginalArtwork {
+        int artworkId(PK)
+        int userId(FK)
+        string title
+        string artist
+        string yearCreated
+        string medium
+        string dimensions
+        string description
+        string imageURL
+        string[] comments
+        int likeCount
+        date createdAt
+        date updatedAt
+    }
+
+    Like {
+        int likeId(PK)
+        int userId(FK)
+        int objectID(FK)
+        int artworkID
+        date createdAt
+    }
+
+    Comment {
+        int commentId(PK)
+        int userId(FK)
+        int artworkId(FK)
+        string commentText
+        date createdAt
+    }
+```
+
+### Gantt Chart
+
+The Gantt chart provided a timeline and a project management roadmap depicting the scheduling of tasks, milestones, and deliverables.
+
+```mermaid
+    gantt
+    dateFormat  YYYY-MM-DD
+    title ArtHub Development Timeline
+
+    section Planning
+    Project Documentation               :doc1, 2024-02-20, 2024-04-04
+
+    section Backend
+    Initialize Backend Express App      :done,    b1, 2024-02-20, 2d
+    Database Connection                 :done,    b2, after b1, 2d
+    CRUD Operations Development         :done,    b3, after b2, 3d
+    Build Controllers and Models        :done,    b4, after b3, 3d
+    Backend Testing with Postman        :done,    b5, after b4, 2d
+    API Documentation with Swagger UI   :done,    b6, after b5, 2d
+    Backend Fine-tuning and Optimization:active,  b7, after b6, 3d
+
+    section Frontend
+    Initialize React Application        :done,    f1, after b7, 2d
+    Setup React Router and Routes       :done,    f2, after f1, 2d
+    Implement Forms and Data Fetching   :done,    f3, after f2, 3d
+    Install MaterialUI                  :done,    f4, after f3, 3d
+    Frontend Interactivity with Hooks   :active,  f5, after f4, 4d
+    Frontend Testing                    :active,  f6, after f5, 2d
+    Frontend Fine-tuning                :active,  f7, after f6, 3d
+
+    section Finalization
+    Code Review and Refactoring         :active,  cr, after f7, 3d
+    Prepare Presentation & Demo         :active,  pd, after cr, 2d
+    Final Deployment                    :         fd, after pd, 2d
+
+    endDate                             :         2024-04-06
+```
+
+For an in-depth look at our design standards, theme specifications, and detailed color schemes, view our [Visual Design document](./Documents/Mock-up/visualDesigns.md).
 
 ## Features
 
-- **User Accounts**: Secure authentication to manage personal accounts with features like 'liking gallery artworks', 'sharing original artworks' and 'liking and commenting on original artworks'. User account details can be updated and deleted by the user.
-- **Admin Account**: Administrators account to manage content moderation, account suspension and deletion according to Terms and Conditions.
-- **Artwork Interaction**: Users can interact with an extensive gallery, share via URLs, upload to a 'User Gallery', and make artworks public for broader audience appreciation.
-- **Discover**: Explore random artworks from the database and learn about artists with links to their respective Getty.edu page.
-- **Create**: Access in-app digital art tools to create new artworks and participate in collaborative art projects.
-- **Share**: Share personal artworks with the community for feedback and engagement.
+**Artistic Exploration at Your Fingertips**: With ArtHub, users embark on a visual journey through diverse epochs of art history. Delve into a curated gallery of masterpieces, each accompanied by detailed information to enrich your understanding of the artwork and its creator.
+
+**Personalized User Accounts**: Create your unique profile and curate your art experience. Personalize your space by liking your favorite pieces and build a collection that speaks to your aesthetic. Your virtual gallery grows with you as you explore and interact with new artworks.
+
+**Robust Admin Controls**: Maintain a harmonious community with powerful administrative tools. Monitor content, ensure compliance with community guidelines, and provide a safe, welcoming environment for all users to share their passion for art.
+
+**Dynamic Artwork Interaction**: Engage with art on a deeper level. Share your favorite pieces with friends via social media, express your thoughts and interpretations through comments, and contribute to the vibrant discourse within the ArtHub community.
+
+**Discover & Learn**: Open the doors to random encounters with beauty and knowledge. The 'Discover' feature randomizes the presentation of artworks, providing unexpected moments of inspiration. Expand your artistry by learning the history behind each piece and exploring the stories of iconic artists.
+
+**Creative Canvas**: Unleash your creativity using ArtHub's digital art tools. Whether sketching a quick concept or composing a complex piece, our integrated creation suite supports your artistic process with a variety of brushes, colors, and layers.
+
+**Community Collaboration**: Participate in community challenges, share your artwork, and connect with like-minded individuals. ArtHub embraces the spirit of collaboration and mutual learning, offering a platform for artists to grow together.
+
+**Art Sharing and Visibility**: Showcase your art to the world. Upload your creations to the community gallery, receive feedback, and find new audiences to appreciate your work. ArtHub is not just a platform; it's a stage for emerging and established artists alike.
+
+For a more detailed look at our complete range of features, see our [Functional Requirements document](./Documents/Other/functionalRequirements.md).
 
 ## Getting Started
 
@@ -43,9 +199,25 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Testing
 
-To run the automated tests for this system:
+ArtHub has undergone extensive user interface testing to ensure each feature performs as intended and provides a seamless experience for our users. Through this rigorous process, we have verified the functionality of:
 
-npm test
+- User login and account creation, ensuring secure access and easy onboarding.
+- User dashboard operations, allowing for account edits and deletions.
+- Random artwork fetching in the gallery for user exploration and discovery.
+- Artwork 'liking' and 'un-liking', with immediate feedback and updates.
+- Favourites gallery that tracks and displays liked artworks.
+
+Despite our progress, we have identified several areas that require further attention and improvement in our next version:
+
+- **Multiple Account Sessions**: Users are currently able to log in to multiple accounts at once. We will look to implement a more restrictive session management in our future updates.
+
+- **Profile Picture Update**: There is an issue with saving the profile picture URL to the database correctly, resulting in users being unable to update their profile images. We are committed to fixing this in the upcoming release.
+
+- **Post-Like Login Redirection**: Users prompted to log in after attempting to like an artwork are incorrectly redirected back to the login screen post-login, rather than the artwork they were interacting with. We aim to polish this user flow to create a more intuitive experience.
+
+- **Gallery Persistence**: The gallery currently fetches a new painting upon revisiting, which disrupts the user's browsing experience. Plans are underway to maintain the state of the gallery for seamless user navigation.
+
+These insights are crucial for the continuous enhancement of the platform, and our development team is dedicated to addressing these issues. To contribute to our testing efforts or review our detailed test results and plans for resolution, please see our [Testing Document](./Documents/Other/testing.md).
 
 ## Built With
 
@@ -69,7 +241,9 @@ Upon launching ArtHub, you'll be greeted by the homepage. To login or sign up yo
 Once logged in, you can browse through various artworks showcased on the main gallery page. Click on any artwork to view it in detail. Here, you can:
 
 - **Like Artwork**: Express your appreciation by clicking the 'like' button.
+- **Favourites Gallery**: Enter a curated gallery of 'liked' artworks.
 - **Explore Artwork**: Click to enlarge artwork, link to artists getty.edu page for educational resources about artwork and artist.
+- **Learn**: Learn more about the artist by clicking their name. User is navigated to artist getty.edu page, which contains information about the artist and an extensive list of resources.
 - **Share**: Use the social sharing options to share your favorite artworks with friends on different social media platforms.
 
 ### Using Art Creation Tools
@@ -86,7 +260,7 @@ As you create, you can save your work in progress, and once complete, upload it 
 
 ArtHub promotes community engagement through various social features:
 
-- **Upload**: Share your creations by uploading them to your gallery. Provide a title, detailed description, and tags to make it discoverable.
+- **Upload**: Share your creations by uploading them to the user gallery. Provide a title, detailed description, and tags to make it discoverable.
 - **Follow Artists**: Connect with other artists by following their profiles. You'll get updates on their new uploads and activities.
 - **Participate in Challenges**: Engage with the community by taking part in art challenges posted on ArtHub. Your submissions will be viewable by the entire community, garnering feedback and fostering a collaborative spirit.
 
@@ -133,8 +307,8 @@ Feel free to open an issue if you encounter a problem that isn't addressed here.
 
 ## Project Status
 
-As of [01/04/2024, Version 1.0.0], this project is in a [development/production/testing] phase. Updates and improvements are continuously being added, and contributions are welcome.
+As of [05/04/2024, Version 1.0.0], this project is in a [development/production/testing] phase. Updates and improvements are continuously being added, and contributions are welcome.
 
 ## Releases
 
-For a detailed changelog, please refer to the [Releases](https://github.com/your_username/ArtHub/releases) section of the GitHub repository.
+For a detailed changelog, please refer to the [Releases](https://github.com/SimianPrimus/ArtHub/releases) section of the GitHub repository.

@@ -286,7 +286,7 @@ const GalleryArt: React.FC = () => {
             {/* Display artist information */}
             {artwork.constituents &&
               artwork.constituents.some((c) => c.role === "Artist") && (
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body1" color="text.tertiary">
                   Artist:{" "}
                   {artwork.constituents
                     .filter((c) => c.role === "Artist")
@@ -300,6 +300,9 @@ const GalleryArt: React.FC = () => {
                               href={artist.constituentULAN_URL}
                               target="_blank"
                               rel="noopener noreferrer"
+                              style={{
+                                color: "inherit",
+                              }}
                             >
                               {artist.name}
                             </a>
@@ -311,7 +314,7 @@ const GalleryArt: React.FC = () => {
                     })}
                 </Typography>
               )}
-            <Typography variant="body2" color="text.secondary">
+            <Typography variant="body2" color="text.tertiary">
               {artwork.medium} - {artwork.department}
             </Typography>
             <IconButton
@@ -337,7 +340,7 @@ const GalleryArt: React.FC = () => {
           </CardContent>
         </Card>
       ) : (
-        <Typography variant="h6" color="text.secondary" textAlign="center">
+        <Typography variant="h6" color="text.tertiary" textAlign="center">
           Loading artwork...
         </Typography>
       )}

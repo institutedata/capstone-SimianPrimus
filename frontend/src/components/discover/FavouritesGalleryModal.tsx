@@ -41,8 +41,13 @@ interface IFavouritesGalleryModalProps {
   onClose: () => void;
   userId: number;
   token: string | null;
+<<<<<<< HEAD
   likedArtworks: IArtwork[];
   currentIndex: number;
+=======
+  //likedArtworks: IArtwork[];
+  //currentIndex: number;
+>>>>>>> feature-branch-themes
 }
 
 const FavouritesGalleryModal: React.FC<IFavouritesGalleryModalProps> = ({
@@ -158,27 +163,20 @@ const FavouritesGalleryModal: React.FC<IFavouritesGalleryModalProps> = ({
               <Typography gutterBottom variant="h5" component="div">
                 {currentArtwork.title}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.tertiary">
                 Department: {currentArtwork.department}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.tertiary">
                 Artist:{" "}
                 {artistLinks ||
                   currentArtwork.artistDisplayName ||
                   "Unknown artist"}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.tertiary">
                 Medium: {currentArtwork.medium}
               </Typography>
               {/* Additional artwork details can be added here */}
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  padding: "0px 16px 16px 16px",
-                  marginBottom: "20px",
-                }}
-              >
+              <div>
                 <Button onClick={handlePrevious} disabled={currentIndex === 0}>
                   Previous
                 </Button>
