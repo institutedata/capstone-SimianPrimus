@@ -1,3 +1,34 @@
+# 🎨 ArtHub: Discover, Create, Share 🖌️
+
+## Table of Contents:
+
+- [ArtHub](#arthub)
+- [Planning and Design](#planning-and-design)
+  - [Wireframes](#wireframes)
+  - [User Flow](#user-flow)
+  - [Color Palette and Theme](#color-palette-and-theme)
+  - [Figma Designs](#figma-designs)
+  - [Entity Relationship Diagram (ERD)](#entity-relationship-diagram-erd)
+  - [Gantt Chart](#gantt-chart)
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Testing](#testing)
+- [Built With](#built-with)
+- [Usage](#usage)
+  - [Logging In](#logging-in)
+  - [Interacting with Artworks](#interacting-with-artworks)
+  - [Using Art Creation Tools](#using-art-creation-tools)
+  - [Sharing and Social Features](#sharing-and-social-features)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+- [Acknowledgements](#acknowledgements)
+- [Troubleshooting/Common Issues](#troubleshootingcommon-issues)
+- [Project Status](#project-status)
+- [Releases](#releases)
+
 # ArtHub
 
 Welcome to ArtHub, where creativity meets community—a digital sanctuary crafted for artists, art students, and enthusiasts from all corners of the globe. Drawing from the illustrious collection of The Metropolitan Museum of Art, we've built a bridge between history's most treasured artworks and today's digital landscape.
