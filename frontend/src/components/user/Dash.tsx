@@ -144,7 +144,7 @@ const Dashboard: React.FC = () => {
               <Button
                 className="button"
                 variant="contained"
-                color="primary"
+                color="secondary"
                 onClick={() => handleEditField(field as keyof UserData)}
               >
                 {isEditing === field ? "Save" : "Edit"}
@@ -193,5 +193,3 @@ const Dashboard: React.FC = () => {
 };
 
 export default Dashboard;
-
-// TODO: Ensure user data is persisting after site reload

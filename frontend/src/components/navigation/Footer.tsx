@@ -32,16 +32,19 @@ const Footer: React.FC = () => {
           alignItems="center"
         >
           {socialLinks.map((link) => (
-            <Link href={link.url} key={link.name} className="socialLink" target="_blank" rel="noreferrer">
+            <Link
+              href={link.url}
+              key={link.name}
+              className="socialLink"
+              target="_blank"
+              rel="noreferrer"
+            >
               {/* Using IconButton for Material-UI icon buttons */}
               <IconButton>{link.icon}</IconButton>
               {link.name}
             </Link>
           ))}
         </Grid>
-        <Typography variant="body2" className="copyright">
-          &copy; Sarah McGregor, 2024
-        </Typography>
         <Grid item xs={12}>
           <div className="footerLinksContainer">
             {footerLinks.map((link) => (
@@ -51,6 +54,9 @@ const Footer: React.FC = () => {
             ))}
           </div>
         </Grid>
+        <Typography variant="body2" className="copyright">
+          &copy; Sarah McGregor, 2024
+        </Typography>
       </Grid>
     </footer>
   );
