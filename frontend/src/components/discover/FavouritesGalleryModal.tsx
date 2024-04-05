@@ -41,13 +41,8 @@ interface IFavouritesGalleryModalProps {
   onClose: () => void;
   userId: number;
   token: string | null;
-<<<<<<< HEAD
-  likedArtworks: IArtwork[];
-  currentIndex: number;
-=======
   //likedArtworks: IArtwork[];
   //currentIndex: number;
->>>>>>> feature-branch-themes
 }
 
 const FavouritesGalleryModal: React.FC<IFavouritesGalleryModalProps> = ({
