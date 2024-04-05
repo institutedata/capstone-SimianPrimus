@@ -186,23 +186,33 @@ export const createUser = async (req: CustomRequest, res: Response) => {
 };
 
 // Update a user
-export const updateUser = async (req: CustomRequest, res: any) => {
+export const updateUser = async (req: Request, res: Response) => {
   const userId = req.params.id;
   const file = req.file;
   let imageUrl: string | null = null;
-  // If file was uploaded, construct its URL
+
   if (file) {
-    imageUrl = `${req.protocol}}://${req.get("host")}/uploads/${file.filename}`;
+    imageUrl = `${req.protocol}://${req.get("host")}/uploads/${file.filename}`;
   }
 
   try {
-    const user = await Models.findByPk(req.params.id);
+    const user = await Models.findByPk(userId);
     if (user) {
+      const updates = req.body;
+
+      // Check if password is being updated
+      if (updates.password) {
+        const hashedPassword = await bcrypt.hash(updates.password, 10);
+        updates.password = hashedPassword;
+      }
+
       // Update user with new data, including image URL if a new file was uploaded
       const updatedUser = await user.update({
-        ...req.body,
-        ...(imageUrl && { profileImage: imageUrl }), // Conditionally add profileImage to the update payload
+        ...updates,
+        ...(imageUrl && { profileImage: imageUrl }), // Only add profileImage if imageUrl is not null
       });
+
+      // Prepare the response data without the password field
       const userResponse = {
         userId: updatedUser.userId,
         firstName: updatedUser.firstName,
@@ -212,7 +222,9 @@ export const updateUser = async (req: CustomRequest, res: any) => {
         profileImage: updatedUser.profileImage,
         createdAt: updatedUser.createdAt,
         updatedAt: updatedUser.updatedAt,
+        // Do not send back the password, even if it's hashed
       };
+
       return res.json(userResponse);
     } else {
       res.status(404).json({ message: "User not found" });
