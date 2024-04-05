@@ -20,6 +20,44 @@ Early-stage wireframing was crucial in mapping out the user interface and experi
 
 _Wireframe showcasing the basic layout and design architecture of ArtHub._
 
+## User Flow
+
+### Landing on the Home Page
+
+- When a user lands on the home page, they are presented with options to log in or sign up for an account.
+- Alternatively, users can navigate to the gallery section to view random artworks.
+
+### Gallery Interaction
+
+- In the gallery, users can view random artworks and have the option to like a painting.
+- If a user tries to like a painting without being logged in, they are redirected to the login/sign-up screen.
+- Once logged in, users can go back to the gallery and like artworks.
+
+### Favourites Gallery
+
+- Users can click on the 'show favourites' button to open a favourites gallery that displays the paintings they have liked.
+
+### Creation Hub and Art Hub
+
+- If a user clicks on the 'creation hub' or 'art hub' links without being logged in, they will be directed to the login/sign-up screen.
+- Users without existing accounts can click on the 'create account' button to open the account creation form.
+- After creating an account, users are automatically logged in and navigated back to the homepage.
+
+```mermaid
+flowchart
+    A[User lands on home page] -->|User goes to 'login/sign up'| B(User logs in)
+    A -->|User goes to 'gallery' and views random artworks| C
+    C -->|User tries to like painting| D{User logged in?}
+    D -->|No| B
+    D -->|Yes| C(User can like artworks)
+    C -->|User clicks 'show favourites' button| E(Favourites gallery opens and displays user's liked paintings)
+    C -->|User goes to 'creation hub' or 'arthub'| F(User is not logged in)
+    F -->|User will be directed to login/sign-up screen on 'creation hub' or 'arthub' links| B
+    B -->|User does not have an existing account| G(User clicks 'create account' button)
+    G -->|User opens account creation form| H(User creates account)
+    H -->|User is auto-logged into account and navigated back to homepage| A
+```
+
 ### Color Palette and Theme
 
 Through careful consideration, we have developed a color palette and themes that complement the artistic content and create a soothing browsing experience. To view the light and dark themes along with the custom colors, please refer to our [Visual Design document](./Documents/Mock-up/visualDesigns.md).
@@ -265,44 +303,6 @@ ArtHub promotes community engagement through various social features:
 - **Participate in Challenges**: Engage with the community by taking part in art challenges posted on ArtHub. Your submissions will be viewable by the entire community, garnering feedback and fostering a collaborative spirit.
 
 For any additional help or information on using ArtHub, please refer to our `Help` section or contact support.
-
-## User Flow
-
-### Landing on the Home Page
-
-- When a user lands on the home page, they are presented with options to log in or sign up for an account.
-- Alternatively, users can navigate to the gallery section to view random artworks.
-
-### Gallery Interaction
-
-- In the gallery, users can view random artworks and have the option to like a painting.
-- If a user tries to like a painting without being logged in, they are redirected to the login/sign-up screen.
-- Once logged in, users can go back to the gallery and like artworks.
-
-### Favourites Gallery
-
-- Users can click on the 'show favourites' button to open a favourites gallery that displays the paintings they have liked.
-
-### Creation Hub and Art Hub
-
-- If a user clicks on the 'creation hub' or 'art hub' links without being logged in, they will be directed to the login/sign-up screen.
-- Users without existing accounts can click on the 'create account' button to open the account creation form.
-- After creating an account, users are automatically logged in and navigated back to the homepage.
-
-```mermaid
-flowchart
-    A[User lands on home page] -->|User goes to 'login/sign up'| B(User logs in)
-    A -->|User goes to 'gallery' and views random artworks| C
-    C -->|User tries to like painting| D{User logged in?}
-    D -->|No| B
-    D -->|Yes| C(User can like artworks)
-    C -->|User clicks 'show favourites' button| E(Favourites gallery opens and displays user's liked paintings)
-    C -->|User goes to 'creation hub' or 'arthub'| F(User is not logged in)
-    F -->|User will be directed to login/sign-up screen on 'creation hub' or 'arthub' links| B
-    B -->|User does not have an existing account| G(User clicks 'create account' button)
-    G -->|User opens account creation form| H(User creates account)
-    H -->|User is auto-logged into account and navigated back to homepage| A
-```
 
 ## Contributing
 
