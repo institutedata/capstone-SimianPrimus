@@ -335,6 +335,30 @@ ArtHub promotes community engagement through various social features:
 
 For any additional help or information on using ArtHub, please refer to our `Help` section or contact support.
 
+## Future Function Development
+
+### Introduction
+
+At Art Hub, we are constantly evolving and adding new features to enrich the experience for our users. Our vision for future development is not just addition but also innovation, ensuring that Art Hub remains a dynamic and user-friendly platform for art discovery, creation, and community building.
+
+### Upcoming Features
+
+While we maintain the current functionality, many new features are on the horizon to enhance user interaction and engagement with the arts. Some of the developments we are looking forward to include:
+
+- Advanced Art Discovery Tools
+- Improved Artwork Interaction with Social Features
+- Mobile App Launch with Multi-Platform Support
+- Incorporation of Art Creation and Editing Tools
+- Community and Collaboration Spaces for Artists and Enthusiasts
+
+These upcoming features are designed with our community in mind, aiming to foster a more connected and interactive environment for all art lovers and creators. Our goal is to create a hub where art is not just consumed but lived and breathed in myriad ways.
+
+### Stay Updated
+
+To stay informed about our progress and future updates, visit our [Roadmap](/Documents/Documents/Other/roadmap.md) which outlines our objectives and the exciting additions planned for Art Hub. The roadmap is continually updated to reflect our latest plans and community feedback.
+
+[View the Roadmap](/Documents/Documents/Other/roadmap.md)
+
 ## Contributing
 
 Any contributions you make are **greatly appreciated**. If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
@@ -380,4 +404,4 @@ As of [05/04/2024, Version 1.0.0], this project is in a [development/production/
 
 ## Releases
 
-For a detailed changelog, please refer to the [Releases](https://github.com/SimianPrimus/ArtHub/releases) section of the GitHub repository.
+For a detailed changelog, please refer to the [Releases](https://github.com/institutedata/capstone-SimianPrimus) section of the GitHub repository.
