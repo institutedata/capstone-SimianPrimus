@@ -9,6 +9,7 @@ import {
   Modal,
   Box,
   Tooltip,
+  CircularProgress,
 } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
@@ -57,6 +58,7 @@ const GalleryArt: React.FC = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isFavouritesModalOpen, setIsFavouritesModalOpen] =
     useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const handleOpenModal = () => {
     setOpenModal(true);
@@ -71,15 +73,22 @@ const GalleryArt: React.FC = () => {
 
   const fetchRandomArtwork = async () => {
     try {
+      setIsLoading(true); // Set loading state to true
       const response = await axios.get<Artwork>(
         "http://localhost:8080/api/services/random"
       );
       setArtwork(response.data);
       setLiked(response.data.liked || false);
       setLikeCount(response.data.likeCount);
-    } catch (error) {
-      console.error("Error fetching random artwork:", error);
-      // TODO: Handle error appropriately, possibly by updating the state to show an error message
+      setIsLoading(false); // Set loading state to false after fetching artwork
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      const message = (error.response?.data?.message ||
+        "Error fetching artwork.") as string;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      console.error(message, error as any);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -137,6 +146,7 @@ const GalleryArt: React.FC = () => {
     } else {
       // Fetch a new random artwork
       try {
+        setIsLoading(true); // Set loading state to true
         const response = await axios.get<Artwork>(
           "http://localhost:8080/api/services/random"
         );
@@ -149,8 +159,10 @@ const GalleryArt: React.FC = () => {
         // Update like status and count for the new artwork
         setLiked(response.data.liked || false);
         setLikeCount(response.data.likeCount);
+        setIsLoading(false); // Set loading state to false after fetching artwork
       } catch (error) {
         console.error("Error fetching next artwork:", error);
+        setIsLoading(false);
       }
     }
   };
@@ -250,10 +262,30 @@ const GalleryArt: React.FC = () => {
       onTouchEnd={handleTouchEnd}
       style={{ touchAction: "none" }} // Disables default browser handling of touch actions
     >
-      {/* Navigation buttons for non-touch devices */}
-
       {/* The Card component displaying the artwork */}
-      {artwork ? (
+      {isLoading ? (
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            padding: "20px",
+            height: "100vh",
+            alignItems: "center",
+            textAlign: "center",
+          }}
+        >
+          <CircularProgress />
+        </Box>
+      ) : error ? (
+        <Typography
+          variant="h6"
+          color="error"
+          textAlign="center"
+          style={{ padding: "20px" }}
+        >
+          {error} {/* Display the error message */}
+        </Typography>
+      ) : artwork ? (
         <Card
           sx={{
             maxWidth: 345,
@@ -333,15 +365,13 @@ const GalleryArt: React.FC = () => {
                 onClose={closeFavouritesModal}
                 token={token}
                 userId={0}
-                likedArtworks={[]}
-                currentIndex={0}
               />
             </ErrorBoundary>
           </CardContent>
         </Card>
       ) : (
         <Typography variant="h6" color="text.tertiary" textAlign="center">
-          Loading artwork...
+          Could not load artwork. Please try again later.
         </Typography>
       )}
       {/* Modal for the enlarged image */}
