@@ -22,7 +22,14 @@ const ArtHub: React.FC = () => {
       }}
     >
       {/* A single card with a Link and styling */}
-      <Card sx={{ maxWidth: 600, boxShadow: 3 }}>
+      <Card
+        sx={{
+          maxWidth: 600,
+          boxShadow: 3,
+          marginBottom: 8,
+          padding: 2,
+        }}
+      >
         {" "}
         {/* Maximum card width and shadow */}
         <Link to="/userGallery" style={{ textDecoration: "none" }}>
@@ -38,10 +45,10 @@ const ArtHub: React.FC = () => {
               {/* Content on the left */}
               <CardContent sx={{ flex: "1 1 auto", p: 3, textAlign: "center" }}>
                 {/* Flex property and padding */}
-                <Typography gutterBottom variant="h5" component="div">
+                <Typography gutterBottom variant="h3" component="div">
                   The ArtHub
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body1" color="text.secondary">
                   Share your creations, appreciate others, and get inspired.
                 </Typography>
               </CardContent>

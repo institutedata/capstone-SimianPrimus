@@ -161,7 +161,7 @@ const CreatePage: React.FC = () => {
                   }}
                 >
                   <Typography gutterBottom variant="h3" component="div">
-                    Collaborate
+                    Team Up
                   </Typography>
                   <Typography variant="body2" color="text.secondary">
                     Work together on projects and share your ideas with the

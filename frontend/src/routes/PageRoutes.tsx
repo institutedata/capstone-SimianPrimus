@@ -9,7 +9,7 @@ import AddArtworks from "../pages/AddArtworks";
 import UserGallery from "../pages/UserGallery";
 import CreateHub from "../pages/CreateHub";
 import Learn from "../pages/Learn";
-import Collaborate from "../pages/Collaborate";
+import Collaborate from "../pages/TeamUp";
 import PushIt from "../pages/PushIt";
 import Dashboard from "../pages/Dashboard";
 

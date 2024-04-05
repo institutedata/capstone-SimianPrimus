@@ -1,10 +1,10 @@
 import React from "react";
 import UnderConstruction from "/public/images/UnderConstruction.png";
 
-const UserGallery: React.FC = () => {
+const Collaborate: React.FC = () => {
   return (
     <div>
-      <h2>User Gallery</h2>
+      <h2>Team Up</h2>
       <h3>Under Construction</h3>
       <img
         src={UnderConstruction}
@@ -15,4 +15,4 @@ const UserGallery: React.FC = () => {
   );
 };
 
-export default UserGallery;
+export default Collaborate;
