@@ -126,32 +126,39 @@ const Dashboard: React.FC = () => {
     return <div>Loading...</div>; // Display a loading message if editableFields is not available yet
   }
 
+  // Function to filter out the fields we don't want to display or edit
+  const filterEditableFields = (field: string): boolean => {
+    return !["userId", "createdAt", "updatedAt"].includes(field);
+  };
+
   return (
     <div className="formContainer">
       <Typography variant="h4">User Dashboard</Typography>
 
       <Grid container spacing={2}>
-        {Object.keys(editableFields).map((field) => (
-          <Grid item xs={12} key={field}>
-            <Box className="formElement" display="flex">
-              <TextField
-                name={field}
-                label={field.charAt(0).toUpperCase() + field.slice(1)}
-                value={editableFields[field as keyof UserData]}
-                onChange={isEditing === field ? handleInputChange : undefined}
-                disabled={isEditing !== field}
-              />
-              <Button
-                className="button"
-                variant="contained"
-                color="secondary"
-                onClick={() => handleEditField(field as keyof UserData)}
-              >
-                {isEditing === field ? "Save" : "Edit"}
-              </Button>
-            </Box>
-          </Grid>
-        ))}
+        {Object.keys(editableFields)
+          .filter(filterEditableFields)
+          .map((field) => (
+            <Grid item xs={12} key={field}>
+              <Box className="formElement" display="flex">
+                <TextField
+                  name={field}
+                  label={field.charAt(0).toUpperCase() + field.slice(1)}
+                  value={editableFields[field as keyof UserData]}
+                  onChange={isEditing === field ? handleInputChange : undefined}
+                  disabled={isEditing !== field}
+                />
+                <Button
+                  className="button"
+                  variant="contained"
+                  color="secondary"
+                  onClick={() => handleEditField(field as keyof UserData)}
+                >
+                  {isEditing === field ? "Save" : "Edit"}
+                </Button>
+              </Box>
+            </Grid>
+          ))}
       </Grid>
 
       <Button
