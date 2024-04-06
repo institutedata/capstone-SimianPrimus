@@ -1,0 +1,956 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "ArtHub",
+        "description": "A collection of the CRUD commands for the Artopia backend",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8080"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Artworks",
+            "description": "CRUD commands for the Artworks table. Fetches artwork details from Metropolitan API. Saves artwork details to database. Artworks can be manually updated or deleted by objectID."
+        },
+        {
+            "name": "User",
+            "description": "CRUD commands for the User table. User profiles can be created, updated and deleted. User profiles can be viewed as an array or singularly by userId. Passwords are hashed."
+        },
+        {
+            "name": "Original Artworks",
+            "description": "CRUD commands for the Original Artworks table. User artworks can be added, updated and deleted by logged in users or site admin accounts."
+        },
+        {
+            "name": "Likes",
+            "description": "CRUD commands for User Gallery likes. Logged in users can like and unlike Original Artworks in the User Gallery. An array of likes can be retrieved by userId, likeId or artworkId."
+        },
+        {
+            "name": "Gallery Likes",
+            "description": "CRUD commands for Gallery likes. Logged in users can like and unlike Artworks in the Gallery. An array of likes can be retrieved by userId, likeId or objectID."
+        }
+    ],
+    "paths": {
+        "/api/services": {
+            "get": {
+                "tags": [
+                    "Artworks"
+                ],
+                "summary": "http://localhost:8080/api/services",
+                "description": "Get all artworks in the database",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/sync": {
+            "get": {
+                "tags": [
+                    "Artworks"
+                ],
+                "summary": "http://localhost:8080/api/services/sync",
+                "description": "Fetch artwork details from MetAPI, check if objectID already exists in database if so skip, check whether artwork details contains primaryImage if so create an Artwork instance and save to database",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/delete/{objectID}": {
+            "delete": {
+                "tags": [
+                    "Artworks"
+                ],
+                "summary": "http://localhost:8080/api/services/delete/:objectID",
+                "description": "Delete artwork by objectID",
+                "parameters": [
+                    {
+                        "name": "objectID",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "description": "Delete artwork with objectID: 435664",
+                        "example": "435664"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/{objectID}": {
+            "put": {
+                "tags": [
+                    "Artworks"
+                ],
+                "summary": "http://localhost:8080/api/services/:objectID",
+                "description": "Update artwork by objectID",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "objectID": 435666,
+                                    "primaryImage": "https://images.metmuseum.org/CRDImages/ep/original/DT292812.jpg",
+                                    "department": "European Paintings",
+                                    "title": "The Story of Joseph",
+                                    "constituents": [
+                                        {
+                                            "name": "Biagio d&#39;Antonio",
+                                            "role": "Artist",
+                                            "gender": "Male",
+                                            "constituentID": 107377,
+                                            "constituentULAN_URL": "http://vocab.getty.edu/page/ulan/500030102",
+                                            "constituentWikidata_URL": "https://www.wikidata.org/wiki/Q2311437"
+                                        }
+                                    ],
+                                    "medium": "Tempera on wood",
+                                    "dimensions": "27 x 59 in. (68.6 x 149.9 cm)",
+                                    "likeCount": 0,
+                                    "createdAt": "2024-03-05T03:24:22.000Z",
+                                    "updatedAt": "2024-03-05T03:24:22.000Z"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "objectID",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "description": "Update artwork with objectID:",
+                        "example": "435666"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/random": {
+            "get": {
+                "tags": [
+                    "Artworks"
+                ],
+                "summary": "http://localhost:8080/api/services/random",
+                "description": "Get random artwork from the database",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/title/{title}": {
+            "get": {
+                "tags": [
+                    "Artworks"
+                ],
+                "summary": "http://localhost:8080/api/services/title/:title",
+                "description": "Get artwork by title",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "example": "Plaque Portrait of Benjamin Franklin"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/constituent/{name}": {
+            "get": {
+                "tags": [
+                    "Artworks"
+                ],
+                "summary": "http://localhost:8080/api/services/constituent/:name",
+                "description": "Get 20 artworks by artists name",
+                "parameters": [
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "example": "William Trost Richards"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/services/artwork/{department}": {
+            "get": {
+                "tags": [
+                    "Artworks"
+                ],
+                "summary": "http://localhost:8080/api/services/artwork/:department",
+                "description": "Get paintings by department name",
+                "parameters": [
+                    {
+                        "name": "department",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "example": "European Paintings"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/galleryLike/like/{userId}": {
+            "get": {
+                "tags": [
+                    "Artworks"
+                ],
+                "summary": "http://localhost:8080/api/galleryLike/like/:userId",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "33"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "http://localhost:8080/api/user",
+                "description": "Get data for all users",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "http://localhost:8080/api/user/:id",
+                "description": "Get userby id",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "22"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "http://localhost:8080/api/user/:id",
+                "description": "Update a user profile",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "id": 23,
+                                    "firstName": "Sarah",
+                                    "lastName": "McGregor",
+                                    "email": "sarah@example.com",
+                                    "username": "sezdawg(updated)",
+                                    "password": "$2b$10$4aPJ19fAAveODt5lHPhSVOqmh1X0fE91G9TCBFsYi3lxg/p3LGqP6",
+                                    "profileImage": "https://hellogiggles.com/wp-content/uploads/sites/7/2016/12/24/instapig.jpg?quality=82&strip=1&resize=640%2C360",
+                                    "createdAt": "2024-03-12T01:05:23.000Z",
+                                    "updatedAt": "2024-03-12T01:05:23.000Z"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "23"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "http://localhost:8080/api/user/:id",
+                "description": "Delete user profile",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "24"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/signup": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "http://localhost:8080/api/user/signup",
+                "description": "Register and save a user profile",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "firstName": "Ella",
+                                    "lastName": "McGregor",
+                                    "email": "ella@example.com",
+                                    "username": "ellbell",
+                                    "password": "password",
+                                    "profileImage": "https://hellogiggles.com/wp-content/uploads/sites/7/2016/12/24/instapig.jpg?quality=82&strip=1&resize=640%2C360"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/user/login": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "http://localhost:8080/api/user/login",
+                "description": "User login",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "email": "sarah@example.com",
+                                    "password": "password"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/originalArtwork": {
+            "post": {
+                "tags": [
+                    "Original Artworks"
+                ],
+                "summary": "http://localhost:8080/api/originalArtwork",
+                "description": "Create original artwork sequence and save to the database",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "userId": "2",
+                                    "title": "Pig in Party Hat",
+                                    "artist": "Mel Baker",
+                                    "yearCreated": "2024",
+                                    "medium": "Photograph",
+                                    "description": "A pig wearing a party hat",
+                                    "imageURL": "https://i.redd.it/iq9kuy6qiuo01.png"
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/originalArtwork/": {
+            "get": {
+                "tags": [
+                    "Original Artworks"
+                ],
+                "summary": "http://localhost:8080/api/originalArtwork",
+                "description": "Get all original artworks",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/originalArtwork/{artworkId}": {
+            "get": {
+                "tags": [
+                    "Original Artworks"
+                ],
+                "summary": "http://localhost:8080/api/originalArtwork/:artworkId",
+                "description": "Get original artwork by artworkId",
+                "parameters": [
+                    {
+                        "name": "artworkId",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "2"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Original Artworks"
+                ],
+                "summary": "http://localhost:8080/api/originalArtwork/:artworkId",
+                "description": "Update an original artwork by artworkId",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "userId": "4",
+                                    "title": "Pig in Party Hat",
+                                    "artist": "Sarah McGregor",
+                                    "yearCreated": "2024",
+                                    "medium": "Photograph",
+                                    "description": "A pig wearing a party (updated) hat",
+                                    "imageURL": "https://i.redd.it/iq9kuy6qiuo01.png"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "artworkId",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Original Artworks"
+                ],
+                "summary": "http://localhost:8080/api/originalArtwork/:artworkId",
+                "description": "Delete artwork by artworkId",
+                "parameters": [
+                    {
+                        "name": "artworkId",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/like/{artworkId}": {
+            "post": {
+                "tags": [
+                    "Likes"
+                ],
+                "summary": "http://localhost:8080/api/like/:artworkId",
+                "description": "Like original artwork by artworId",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "userId": "1",
+                                    "artworkId": "2"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "artworkId",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "2"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/like/{likeId}": {
+            "get": {
+                "tags": [
+                    "Likes"
+                ],
+                "summary": "http://localhost:8080/api/like/:likeId",
+                "description": "Get post by likeId",
+                "parameters": [
+                    {
+                        "name": "likeId",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "2"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/like/delete/{likeId}": {
+            "delete": {
+                "tags": [
+                    "Likes"
+                ],
+                "summary": "http://localhost:8080/api/like/delete/:likeId",
+                "description": "Delete like by likeId",
+                "parameters": [
+                    {
+                        "name": "likeId",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "2"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/like": {
+            "get": {
+                "tags": [
+                    "Likes"
+                ],
+                "summary": "http://localhost:8080/api/like",
+                "description": "Get all likes",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/galleryLike/{objectID}": {
+            "post": {
+                "tags": [
+                    "Gallery Likes"
+                ],
+                "summary": "http://localhost:8080/api/galleryLike/:objectID",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "example": {
+                                    "userId": "23",
+                                    "objectID": "10845"
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "objectID",
+                        "in": "path",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/galleryLike/{likeId}": {
+            "get": {
+                "tags": [
+                    "Gallery Likes"
+                ],
+                "summary": "http://localhost:8080/api/galleryLike/:likeId",
+                "description": "Get gallery like by likeId",
+                "parameters": [
+                    {
+                        "name": "likeId",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "7"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/galleryLike/delete/{likeId}": {
+            "delete": {
+                "tags": [
+                    "Gallery Likes"
+                ],
+                "summary": "http://localhost:8080/api/galleryLike/delete/:likeId",
+                "description": "Delete like by likeId",
+                "parameters": [
+                    {
+                        "name": "likeId",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "3"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/galleryLikes/": {
+            "get": {
+                "tags": [
+                    "Gallery Likes"
+                ],
+                "summary": "http://localhost:8080/api/galleryLikes/",
+                "description": "Get all gallery likes",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/galleryLikes/{userId}": {
+            "get": {
+                "tags": [
+                    "Gallery Likes"
+                ],
+                "summary": "http://localhost:8080/api/galleryLikes/:userId",
+                "description": "Get likes by userId",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/galleryLikes/object/{objectID}": {
+            "get": {
+                "tags": [
+                    "Gallery Likes"
+                ],
+                "summary": "http://localhost:8080/api/galleryLikes/object/:objectID",
+                "description": "Get array of gallery likes by objectID",
+                "parameters": [
+                    {
+                        "name": "objectID",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "435572"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/galleryLike/deleteByUserId/{userId}": {
+            "delete": {
+                "tags": [
+                    "Gallery Likes"
+                ],
+                "summary": "http://localhost:8080/api/galleryLike/deleteByUserId/:userId",
+                "description": "Delete gallery likes by userId ! warning will delete all likes for userId !",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        },
+        "/api/galleryLike/deleteByObjectID/{objectID}": {
+            "delete": {
+                "tags": [
+                    "Gallery Likes"
+                ],
+                "summary": "http://localhost:8080/api/galleryLike/deleteByObjectID/:objectID",
+                "description": "Delete likes by objectID ! warning delets all likes for objectID !",
+                "parameters": [
+                    {
+                        "name": "objectID",
+                        "in": "path",
+                        "schema": {
+                            "type": "integer"
+                        },
+                        "required": true,
+                        "example": "435572"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

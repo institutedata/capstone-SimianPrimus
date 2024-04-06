@@ -1,0 +1,17 @@
+{
+    "name": "arthub",
+    "version": "1.0.0",
+    "scripts": {
+        "start:dev": "concurrently \"cd frontend && npm run dev\" \"cd backend && npx ts-node ./server.ts\""
+    },
+    "devDependencies": {
+        "@babel/core": "^7.24.3",
+        "@babel/preset-env": "^7.24.3",
+        "@testing-library/vue": "^5.0.0",
+        "@types/jest": "^29.5.12",
+        "@types/sequelize": "^4.28.20",
+        "babel-jest": "^29.7.0",
+        "concurrently": "^8.2.2",
+        "jest": "^27.4.7"
+    }
+}
