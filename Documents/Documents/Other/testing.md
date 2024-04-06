@@ -69,5 +69,3 @@ The following issues and bugs were detected during the testing process and are d
    - **Status**: Planned
    - **Priority**: Low
    - **Note**: Additional feature for future development; allows users to manage likes directly from the favorites gallery.
-
-**Note**: The priority levels assist in triaging efforts and ensuring that critical issues are addressed promptly. High priority issues impact core functionality and user experience and should be resolved in the upcoming release. Medium and low priority items can be scheduled for subsequent iterations based on resource availability and user impact.
